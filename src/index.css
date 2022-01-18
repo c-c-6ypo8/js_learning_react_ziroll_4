@@ -1,13 +1,40 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --app-width: 550px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  background-color: #e5e5e5;
+  font-family: 'Poppins', sans-serif;
+  color: #222222;
+  padding: 15px;  
+}
+
+span {
+  white-space: pre-wrap;
+}
+
+.links {
+  width: var(--app-width);
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  padding-bottom: 20px;  
+}
+
+.links a {
+  text-decoration: none;
+  opacity: 0.5;
+  color: #3b3b3b;
+}
+
+.chosen {  
+  font-weight: bold;
+  opacity: 1 !important;
 }
