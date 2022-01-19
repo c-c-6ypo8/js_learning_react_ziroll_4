@@ -1,18 +1,20 @@
+"use strict";
+
 import './index.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { FFactsApp } from './FFacts/FFactsApp'
-import { MDEditorApp } from './MDEditor/MDEditorApp'
+import { MDNotesApp } from './MDNotes/MDNotesApp'
 import { TenziesApp } from './Tenzies/TenziesApp'
 
 const rootElement = document.getElementById('root')
 const linkFFacts = document.getElementById('ffacts')
-const linkMDEditor = document.getElementById('mdeditor')
+const linkMDNotes = document.getElementById('mdnotes')
 const linkTenzies = document.getElementById('tenzies')
 
 const apps = [
   { link: linkFFacts, app: <FFactsApp /> },  
-  { link: linkMDEditor, app: <MDEditorApp /> },  
+  { link: linkMDNotes, app: <MDNotesApp /> },  
   { link: linkTenzies, app: <TenziesApp /> },  
 ]
 
@@ -40,4 +42,4 @@ for (let app of apps) {
   })
 }
 
-choose(linkFFacts)
+choose(linkMDNotes)

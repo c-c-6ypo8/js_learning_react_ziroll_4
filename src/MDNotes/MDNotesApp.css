@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@300;400;600;700&display=swap');
+
+.mdnotes-app {
+  --bg-color: #eee;
+  width: 95vw;
+  height: 100%;
+  border-radius: 1px;
+  border: 1px solid #c5c5c5;
+  overflow: hidden;
+  font-family: 'Karla', sans-serif;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: var(--bg-color);
+}
+
+button:focus {
+  outline: none;
+}
+
+.pane {
+  overflow-y: auto;
+  /* padding: 10px; */
+}
+
+.gutter {
+  background-color: var(--bg-color);
+
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.gutter.gutter-horizontal {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+}
+
+.gutter.gutter-horizontal:hover {
+  cursor: col-resize;
+}
+
+.mdnotes-main-nonotes {
+  width: 100%;
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mdnotes-main-split {
+  display: flex;
+}
+
+.mdnotes-main-firstnote {
+  cursor: pointer;
+  background-color: #4a4e74;
+  border: none;
+  color: white;
+  border-radius: 3px;
+  padding: 1rem;
+}
+
+.note-summary:not(:last-of-type) {
+  border-bottom: 1px solid lightgray;
+}
+
+.ql-editor p,
+.ql-editor.ql-blank::before {
+  font-size: 1.3em;
+  font-weight: 100;
+}
+
+.title--delete {
+  display: none;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+
+.title:hover .title--delete {
+  display: block;
+}

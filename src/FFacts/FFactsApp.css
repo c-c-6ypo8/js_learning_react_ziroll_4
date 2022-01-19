@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+.ffacts-app {
+  width: var(--app-width);
+  border-radius: 10px;
+  overflow: hidden;
+  font-family: "Inter", sans-serif;
+}

@@ -9,11 +9,10 @@
 body {
   display: flex;
   flex-direction: column;
-  align-items: center;  
+  align-items: center;
   background-color: #e5e5e5;
   font-family: 'Poppins', sans-serif;
-  color: #222222;
-  padding: 15px;  
+  color: #222222;  
 }
 
 span {
@@ -24,8 +23,7 @@ span {
   width: var(--app-width);
   display: flex;
   justify-content: space-between;
-  gap: 30px;
-  padding-bottom: 20px;  
+  padding: 15px 5px;
 }
 
 .links a {
@@ -34,7 +32,7 @@ span {
   color: #3b3b3b;
 }
 
-.chosen {  
+.chosen {
   font-weight: bold;
   opacity: 1 !important;
 }
