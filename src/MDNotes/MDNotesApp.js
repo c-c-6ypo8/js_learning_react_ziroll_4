@@ -1,14 +1,31 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { nanoid } from 'nanoid'
 import Split from 'react-split'
 
 import './MDNotesApp.css'
-import { data } from './data'
 import MDNotesSidebar from './components/MDNotesSidebar'
 import MDNotesEditor from './components/MDNotesEditor'
 
+const notesLSName = 'notes'
+
 export const MDNotesApp = () => {
-  const [notes, setNotes] = useState(data || [])
+  const loadNotesFromLS = () => {
+    const notesLS = localStorage.getItem(notesLSName)
+    if (notesLS) {
+      console.info('Notes loaded')
+      return JSON.parse(notesLS)
+    } else {
+      console.info('Notes were not found')
+      return []
+    }
+  }
+
+  const saveNotesToLS = () => {
+    localStorage.setItem(notesLSName, JSON.stringify(notes))
+    console.info('Notes saved')
+  }
+
+  const [notes, setNotes] = useState(() => loadNotesFromLS())
   const [currentNoteId, setCurrentNoteId] = useState(
     (notes[0] && notes[0].id) || '',
   )
@@ -39,6 +56,10 @@ export const MDNotesApp = () => {
       }) || notes[0]
     )
   }
+
+  useEffect(() => {
+    saveNotesToLS()    
+  }, [notes])
 
   return (
     <div className="mdnotes-app">
