@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { nanoid } from 'nanoid'
 import Split from 'react-split'
 
@@ -39,12 +39,20 @@ export const MDNotesApp = () => {
     setCurrentNoteId(newNote.id)
   }
 
-  function updateNote(text) {
+  const moveArrayElement = (arr, fromIndex, toIndex) => {
+    const element = arr[fromIndex]
+    let newArr = arr.slice(fromIndex, 1)
+    return newArr.splice(toIndex, 0, element)
+  }
+
+  const updateNote = (text) => {
     setNotes((oldNotes) =>
       oldNotes.map((oldNote) => {
-        return oldNote.id === currentNoteId
-          ? { ...oldNote, body: text }
-          : oldNote
+        if (oldNote.id === currentNoteId) {
+          return { ...oldNote, body: text }
+        } else {
+          return oldNote
+        }
       }),
     )
   }
@@ -57,8 +65,13 @@ export const MDNotesApp = () => {
     )
   }
 
+  const moveCurrentNoteToTop = useCallback(() => {
+    setNotes((prev) => moveArrayElement(prev, currentNoteId, 0))
+  }, [notes])
+
   useEffect(() => {
-    saveNotesToLS()    
+    saveNotesToLS()
+    // moveCurrentNoteToTop()
   }, [notes])
 
   return (

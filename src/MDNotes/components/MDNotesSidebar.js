@@ -5,13 +5,13 @@ export default function MDNotesSidebar(props) {
     <div key={note.id}>
       <div
         className={`mdnotes-sidebar-title ${
-          note.id === props.currentNote.id
-            ? 'mdnotes-sidebar-selectednote'
-            : ''
+          note.id === props.currentNote.id ? 'mdnotes-sidebar-selectednote' : ''
         }`}
         onClick={() => props.setCurrentNoteId(note.id)}
       >
-        <h4 className="mdnotes-sidebar-textsnippet">Note {index + 1}</h4>
+        <h4 className="mdnotes-sidebar-textsnippet">
+          {props.notes[index].body.split('/n')[0] || 'Note ' + index}
+        </h4>
       </div>
     </div>
   ))
