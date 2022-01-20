@@ -8,7 +8,7 @@ import MDNotesSidebar from './components/MDNotesSidebar'
 import MDNotesEditor from './components/MDNotesEditor'
 
 export const MDNotesApp = () => {
-  const [notes, setNotes] = useState([])
+  const [notes, setNotes] = useState(data || [])
   const [currentNoteId, setCurrentNoteId] = useState(
     (notes[0] && notes[0].id) || '',
   )
