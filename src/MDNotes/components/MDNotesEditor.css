@@ -1,7 +1,25 @@
 .mdnotes-editor {
-  width: 80%;  
+  width: 80%;    
+}
+
+.react-mde {
+  border-radius: var(--border-radius) !important;
+}
+
+.mde-header {  
+  border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+}
+
+.mde-header .mde-tabs button {
+  border-radius: var(--border-radius) !important;
 }
 
 .mde-text {
-  font-size: 1rem;
+  font-size: 1rem;   
+  border-radius: 0 0 var(--border-radius) var(--border-radius) !important;
+}
+
+textarea.mde-text:focus {
+  outline: 2px solid #4a4e74cb;
+  outline-offset: -1px;
 }

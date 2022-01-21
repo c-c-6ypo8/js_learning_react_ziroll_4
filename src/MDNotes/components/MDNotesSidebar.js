@@ -17,11 +17,11 @@ export default function MDNotesSidebar(props) {
         }`}
         onClick={() => props.setCurrentNoteId(note.id)}
       >
-        <h4 className="mdnotes-sidebar-textsnippet">
+        <h4 className='mdnotes-sidebar-textsnippet'>
           {props.notes[index].body.split('\n')[0] || '(empty)'}
         </h4>
         <div
-          className="mdnotes-sidebar-title-closebutton"
+          className='mdnotes-sidebar-title-closebutton'
           onClick={(event) => handleDelete(index, event)}
         >
           ✕
@@ -31,10 +31,10 @@ export default function MDNotesSidebar(props) {
   ))
 
   return (
-    <section className="pane mdnotes-sidebar">
-      <div className="mdnotes-sidebar-header">
+    <section className='pane mdnotes-sidebar'>
+      <div className='mdnotes-sidebar-header'>
         <h3>Notes</h3>
-        <button className="mdnotes-sidebar-newnote" onClick={props.newNote}>
+        <button className='mdnotes-sidebar-newnote' onClick={props.newNote}>
           +
         </button>
       </div>

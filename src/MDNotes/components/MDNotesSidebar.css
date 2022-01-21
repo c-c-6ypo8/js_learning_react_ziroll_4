@@ -1,5 +1,7 @@
 .mdnotes-sidebar {
   width: 20%;
+  --hovered-selected-bg: #565b86;
+  --hovered-bg: white;
 }
 
 .mdnotes-sidebar-note {
@@ -8,8 +10,9 @@
 
 .mdnotes-sidebar-header {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  margin-bottom: 8px;
 }
 
 .mdnotes-sidebar-header > h3 {
@@ -18,10 +21,10 @@
 
 .mdnotes-sidebar-newnote {
   cursor: pointer;
-  background-color: #4a4e74;
+  background-color: var(--main-color);
   border: none;
   color: white;
-  border-radius: 3px;
+  border-radius: var(--border-radius);
   height: 30px;
   width: 30px;
 }
@@ -29,16 +32,22 @@
 .mdnotes-sidebar-title {
   overflow: hidden;
   width: 100%;
-  padding: 7px 3px 7px 0px;
+  padding: 5px 5px 5px 0px;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;  
+  position: relative;
+  border-radius: var(--border-radius);
+  margin-bottom: 5px;
 }
 
 .mdnotes-sidebar-title:hover:not(.mdnotes-sidebar-selectednote) {
-  background-color: rgb(245, 245, 245);
+  background-color: var(--hovered-bg);
+}
+
+.mdnotes-sidebar-selectednote:hover {
+  background-color: var(--hovered-selected-bg);
 }
 
 .mdnotes-sidebar-title-closebutton {
@@ -46,8 +55,8 @@
   font-weight: 600;
   font-size: 12px;
   line-height: 12px;
-  padding: 2px 4px;
-  background-color: rgb(245, 245, 245);  
+  padding: 2px 4px 1px;
+  background-color: var(--hovered-bg);
   position: absolute;
   color: #818181;
   right: 4px;
@@ -57,30 +66,30 @@
   opacity: 1;
 }
 
-.mdnotes-sidebar-selectednote > .mdnotes-sidebar-title-closebutton {  
+.mdnotes-sidebar-selectednote > .mdnotes-sidebar-title-closebutton {
   color: #c2c2c2;
-  background-color: #4a4e74;
+  background-color: var(--hovered-selected-bg);
   border: none;
 }
 
-.mdnotes-sidebar-title-closebutton:hover {  
+.mdnotes-sidebar-title-closebutton:hover {
   opacity: 1;
   color: rgb(255, 62, 62);
 }
 
 .mdnotes-sidebar-selectednote > .mdnotes-sidebar-title-closebutton:hover {
   color: rgb(255, 143, 143);
-  background-color: #4a4e74;
+  background-color: var(--hovered-selected-bg);
 }
 
-.mdnotes-sidebar-title-closebutton:active {  
+.mdnotes-sidebar-title-closebutton:active {
   opacity: 1;
   color: rgb(206, 86, 86);
 }
 
 .mdnotes-sidebar-selectednote > .mdnotes-sidebar-title-closebutton:active {
   color: rgb(219, 144, 144);
-  background-color: #4a4e74;
+  background-color: var(--main-color);
 }
 
 .mdnotes-sidebar-textsnippet {
@@ -88,14 +97,14 @@
   font-size: 0.85rem;
   font-weight: 400;
   line-height: 1.2rem;
-  color: #4a4e74;
+  color: var(--main-color);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .mdnotes-sidebar-selectednote {
-  background-color: #4a4e74;
+  background-color: var(--main-color);
 }
 
 .mdnotes-sidebar-selectednote .mdnotes-sidebar-textsnippet {
