@@ -76,6 +76,14 @@ export const MDNotesApp = () => {
     )
   }
 
+  const deleteNote = (index) => {    
+    setNotes((prev) => {
+      let next = [...prev]
+      next.splice(index, 1)
+      return next
+    })
+  }
+
   useEffect(() => {
     localStorage.setItem(notesLSName, JSON.stringify(notes))
     console.info('Notes saved')
@@ -95,6 +103,7 @@ export const MDNotesApp = () => {
               currentNote={findCurrentNote()}
               setCurrentNoteId={setCurrentNoteId}
               newNote={createNewNote}
+              deleteNote={deleteNote}
             />
             {currentNoteId && notes.length > 0 && (
               <MDNotesEditor

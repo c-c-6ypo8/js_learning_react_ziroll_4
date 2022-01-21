@@ -1,3 +1,7 @@
 .mdnotes-editor {
   width: 80%;  
 }
+
+.mde-text {
+  font-size: 1rem;
+}

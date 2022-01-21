@@ -1,8 +1,15 @@
+import { findDOMNode } from 'react-dom'
 import './MDNotesSidebar.css'
 
 export default function MDNotesSidebar(props) {
-  const showDeleteButton = () => {    
+  const handleDelete = (index, event) => {
+    event.stopPropagation()
+    props.deleteNote(index)
+    if (props.notes[index].id === props.currentNote.id) {
+      props.setCurrentNoteId(props.notes[index + 1]?.id ?? props.notes[0].id)
+    }
   }
+
   const noteElements = props.notes.map((note, index) => (
     <div key={note.id}>
       <div
@@ -12,9 +19,14 @@ export default function MDNotesSidebar(props) {
         onClick={() => props.setCurrentNoteId(note.id)}
       >
         <h4 className="mdnotes-sidebar-textsnippet">
-          {props.notes[index].body.split('\n')[0] || 'Note ' + (index + 1)}
+          {props.notes[index].body.split('\n')[0] || '(empty)'}
         </h4>
-        <div className='mdnotes-sidebar-title-closebutton'> ✕ </div>
+        <div
+          className="mdnotes-sidebar-title-closebutton"
+          onClick={(event) => handleDelete(index, event)}
+        >
+          ✕
+        </div>
       </div>
     </div>
   ))

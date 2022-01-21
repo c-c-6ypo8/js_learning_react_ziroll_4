@@ -29,12 +29,12 @@
 .mdnotes-sidebar-title {
   overflow: hidden;
   width: 100%;
-  padding: 3px 3px 3px 0px;
+  padding: 7px 3px 7px 0px;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
+  position: relative;  
 }
 
 .mdnotes-sidebar-title:hover:not(.mdnotes-sidebar-selectednote) {
@@ -47,19 +47,10 @@
   font-size: 12px;
   line-height: 12px;
   padding: 2px 4px;
-  background-color: rgb(245, 245, 245);
-  border: 1px solid var(--bg-color);
-  border-radius: 10px;
+  background-color: rgb(245, 245, 245);  
   position: absolute;
   color: #818181;
   right: 4px;
-}
-
-.mdnotes-sidebar-title-closebutton:hover {
-  /* background-color: rgb(255, 255, 255); */
-  /* border: 1px solid #4a4e74; */
-  opacity: 1;
-  color: rgb(255, 62, 62);
 }
 
 .mdnotes-sidebar-title:hover > .mdnotes-sidebar-title-closebutton {
@@ -72,14 +63,29 @@
   border: none;
 }
 
+.mdnotes-sidebar-title-closebutton:hover {  
+  opacity: 1;
+  color: rgb(255, 62, 62);
+}
+
 .mdnotes-sidebar-selectednote > .mdnotes-sidebar-title-closebutton:hover {
   color: rgb(255, 143, 143);
   background-color: #4a4e74;
 }
 
+.mdnotes-sidebar-title-closebutton:active {  
+  opacity: 1;
+  color: rgb(206, 86, 86);
+}
+
+.mdnotes-sidebar-selectednote > .mdnotes-sidebar-title-closebutton:active {
+  color: rgb(219, 144, 144);
+  background-color: #4a4e74;
+}
+
 .mdnotes-sidebar-textsnippet {
   padding-inline: 5px;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 400;
   line-height: 1.2rem;
   color: #4a4e74;
