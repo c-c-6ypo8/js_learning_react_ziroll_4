@@ -25,11 +25,6 @@ export const MDNotesApp = () => {
     (notes[0] && notes[0].id) || '',
   )
 
-  const saveNotesToLS = useCallback(() => {
-    localStorage.setItem(notesLSName, JSON.stringify(notes))
-    console.info('Notes saved')
-  }, [notes])
-
   const createNewNote = () => {
     const newNote = {
       id: nanoid(),
@@ -39,13 +34,29 @@ export const MDNotesApp = () => {
     setCurrentNoteId(newNote.id)
   }
 
+  /* Moves element to new position inside the array. Returns modified copy of
+  the array */
   const moveArrayElement = (arr, fromIndex, toIndex) => {
-    const element = arr[fromIndex]
-    let newArr = arr.slice(fromIndex, 1)
-    return newArr.splice(toIndex, 0, element)
+    let newArr = [...arr]
+    const element = newArr[fromIndex]
+    newArr.splice(fromIndex, 1)
+    newArr.splice(toIndex, 0, element)
+    return newArr
   }
 
+  const moveCurrentNoteToTop = useCallback(() => {
+    let currentNotePosition
+    for (let [index, note] of notes.entries()) {
+      if (note.id === currentNoteId) {
+        currentNotePosition = index
+        break
+      }
+    }
+    setNotes((prev) => moveArrayElement(prev, currentNotePosition, 0))
+  }, [notes, currentNoteId])
+
   const updateNote = (text) => {
+    moveCurrentNoteToTop()
     setNotes((oldNotes) =>
       oldNotes.map((oldNote) => {
         if (oldNote.id === currentNoteId) {
@@ -65,22 +76,19 @@ export const MDNotesApp = () => {
     )
   }
 
-  const moveCurrentNoteToTop = useCallback(() => {
-    setNotes((prev) => moveArrayElement(prev, currentNoteId, 0))
-  }, [currentNoteId])
-
   useEffect(() => {
-    saveNotesToLS()
-  }, [saveNotesToLS])
+    localStorage.setItem(notesLSName, JSON.stringify(notes))
+    console.info('Notes saved')
+  }, [notes])
 
   return (
-    <div className='mdnotes-app'>
-      <main className='mdnotes-main'>
+    <div className="mdnotes-app">
+      <main className="mdnotes-main">
         {notes.length > 0 ? (
           <Split
             sizes={[30, 70]}
-            direction='horizontal'
-            className='mdnotes-main-split'
+            direction="horizontal"
+            className="mdnotes-main-split"
           >
             <MDNotesSidebar
               notes={notes}
@@ -96,9 +104,9 @@ export const MDNotesApp = () => {
             )}
           </Split>
         ) : (
-          <div className='mdnotes-main-nonotes'>
+          <div className="mdnotes-main-nonotes">
             <h1>You have no notes</h1>
-            <button className='mdnotes-main-firstnote' onClick={createNewNote}>
+            <button className="mdnotes-main-firstnote" onClick={createNewNote}>
               Create one now
             </button>
           </div>

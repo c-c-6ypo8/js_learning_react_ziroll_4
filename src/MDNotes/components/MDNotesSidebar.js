@@ -1,6 +1,8 @@
 import './MDNotesSidebar.css'
 
 export default function MDNotesSidebar(props) {
+  const showDeleteButton = () => {    
+  }
   const noteElements = props.notes.map((note, index) => (
     <div key={note.id}>
       <div
@@ -10,8 +12,9 @@ export default function MDNotesSidebar(props) {
         onClick={() => props.setCurrentNoteId(note.id)}
       >
         <h4 className="mdnotes-sidebar-textsnippet">
-          {props.notes[index].body.split('/n')[0] || 'Note ' + index}
+          {props.notes[index].body.split('\n')[0] || 'Note ' + (index + 1)}
         </h4>
+        <div className='mdnotes-sidebar-title-closebutton'> ✕ </div>
       </div>
     </div>
   ))

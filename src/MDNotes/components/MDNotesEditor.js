@@ -26,6 +26,7 @@ export default function MDNotesEditor({ currentNote, updateNote }) {
           Promise.resolve(converter.makeHtml(markdown))
         }
         minEditorHeight={70}
+        minPreviewHeight={60}
         heightUnits="vh"
       />
     </section>
