@@ -15,14 +15,9 @@ export const MDNotesApp = () => {
       console.info('Notes loaded')
       return JSON.parse(notesLS)
     } else {
-      console.info('Notes were not found')
+      console.info('No notes were found')
       return []
     }
-  }
-
-  const saveNotesToLS = () => {
-    localStorage.setItem(notesLSName, JSON.stringify(notes))
-    console.info('Notes saved')
   }
 
   const [notes, setNotes] = useState(() => loadNotesFromLS())
@@ -30,7 +25,12 @@ export const MDNotesApp = () => {
     (notes[0] && notes[0].id) || '',
   )
 
-  function createNewNote() {
+  const saveNotesToLS = useCallback(() => {
+    localStorage.setItem(notesLSName, JSON.stringify(notes))
+    console.info('Notes saved')
+  }, [notes])
+
+  const createNewNote = () => {
     const newNote = {
       id: nanoid(),
       body: "# Type your markdown note's title here",
@@ -57,7 +57,7 @@ export const MDNotesApp = () => {
     )
   }
 
-  function findCurrentNote() {
+  const findCurrentNote = () => {
     return (
       notes.find((note) => {
         return note.id === currentNoteId
@@ -67,21 +67,20 @@ export const MDNotesApp = () => {
 
   const moveCurrentNoteToTop = useCallback(() => {
     setNotes((prev) => moveArrayElement(prev, currentNoteId, 0))
-  }, [notes])
+  }, [currentNoteId])
 
   useEffect(() => {
     saveNotesToLS()
-    // moveCurrentNoteToTop()
-  }, [notes])
+  }, [saveNotesToLS])
 
   return (
-    <div className="mdnotes-app">
-      <main className="mdnotes-main">
+    <div className='mdnotes-app'>
+      <main className='mdnotes-main'>
         {notes.length > 0 ? (
           <Split
             sizes={[30, 70]}
-            direction="horizontal"
-            className="mdnotes-main-split"
+            direction='horizontal'
+            className='mdnotes-main-split'
           >
             <MDNotesSidebar
               notes={notes}
@@ -97,9 +96,9 @@ export const MDNotesApp = () => {
             )}
           </Split>
         ) : (
-          <div className="mdnotes-main-nonotes">
+          <div className='mdnotes-main-nonotes'>
             <h1>You have no notes</h1>
-            <button className="mdnotes-main-firstnote" onClick={createNewNote}>
+            <button className='mdnotes-main-firstnote' onClick={createNewNote}>
               Create one now
             </button>
           </div>
