@@ -8,18 +8,35 @@
 
 .mde-header {  
   border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+  border: none !important;
+  padding-bottom: 1px;
 }
 
 .mde-header .mde-tabs button {
   border-radius: var(--border-radius) !important;
 }
 
-.mde-text {
+.mde-textarea-wrapper {
+  border-radius: var(--border-radius) !important;
+  padding: 8px !important;
+  background-color: #f9f9f9;
+}
+
+.mde-text { 
   font-size: 1rem;   
+  outline: 1px solid #c8ccd0;
+  border-radius: var(--border-radius) !important;
+}
+
+.mde-preview {  
+  /* margin: 8px !important; */
   border-radius: 0 0 var(--border-radius) var(--border-radius) !important;
+  outline: 1px solid #c8ccd0;
+  background-color: #f9f9f9;
 }
 
 textarea.mde-text:focus {
-  outline: 2px solid #4a4e74cb;
-  outline-offset: -1px;
+  outline: 1px solid #777ebbd0;
+  /* outline-style: dotted; */
+  /* outline-offset: -1px;   */
 }
