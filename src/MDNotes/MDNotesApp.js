@@ -5,6 +5,7 @@ import Split from 'react-split'
 import './MDNotesApp.css'
 import MDNotesSidebar from './components/MDNotesSidebar'
 import MDNotesEditor from './components/MDNotesEditor'
+import { moveArrayElement } from './libs/arrays'
 
 const notesLSName = 'notes'
 
@@ -25,24 +26,10 @@ export const MDNotesApp = () => {
     (notes[0] && notes[0].id) || '',
   )
 
-  const createNewNote = () => {
-    const newNote = {
-      id: nanoid(),
-      body: "# Type your markdown note's title here",
-    }
-    setNotes((prevNotes) => [newNote, ...prevNotes])
-    setCurrentNoteId(newNote.id)
-  }
-
-  /* Moves element to new position inside the array. Returns modified copy of
-  the array */
-  const moveArrayElement = (arr, fromIndex, toIndex) => {
-    let newArr = [...arr]
-    const element = newArr[fromIndex]
-    newArr.splice(fromIndex, 1)
-    newArr.splice(toIndex, 0, element)
-    return newArr
-  }
+  const saveNotesToLS = useCallback(() => {
+    localStorage.setItem(notesLSName, JSON.stringify(notes))
+    console.info('Notes saved')
+  }, [notes])
 
   const moveCurrentNoteToTop = useCallback(() => {
     let currentNotePosition
@@ -54,6 +41,15 @@ export const MDNotesApp = () => {
     }
     setNotes((prev) => moveArrayElement(prev, currentNotePosition, 0))
   }, [notes, currentNoteId])
+
+  const createNewNote = () => {
+    const newNote = {
+      id: nanoid(),
+      body: "# Type your markdown note's title here",
+    }
+    setNotes((prevNotes) => [newNote, ...prevNotes])
+    setCurrentNoteId(newNote.id)
+  }
 
   const updateNote = (text) => {
     moveCurrentNoteToTop()
@@ -76,27 +72,31 @@ export const MDNotesApp = () => {
     )
   }
 
-  const deleteNote = (index) => {    
+  const deleteNote = (index) => {
     setNotes((prev) => {
       let next = [...prev]
       next.splice(index, 1)
       return next
     })
+    /* If deleted note is the selected one and it is not the last, then move 
+    selection to the end, otherwise, if it is the last — move it to the top */
+    if (notes[index].id === findCurrentNote().id) {
+      setCurrentNoteId(notes[index + 1]?.id ?? notes[0].id)
+    }
   }
 
   useEffect(() => {
-    localStorage.setItem(notesLSName, JSON.stringify(notes))
-    console.info('Notes saved')
-  }, [notes])
+    saveNotesToLS()
+  }, [saveNotesToLS])
 
   return (
-    <div className="mdnotes-app">
-      <main className="mdnotes-main">
+    <div className='mdnotes-app'>
+      <main className='mdnotes-main'>
         {notes.length > 0 ? (
           <Split
             sizes={[30, 70]}
-            direction="horizontal"
-            className="mdnotes-main-split"
+            direction='horizontal'
+            className='mdnotes-main-split'
           >
             <MDNotesSidebar
               notes={notes}
@@ -113,9 +113,9 @@ export const MDNotesApp = () => {
             )}
           </Split>
         ) : (
-          <div className="mdnotes-main-nonotes">
+          <div className='mdnotes-main-nonotes'>
             <h1>You have no notes</h1>
-            <button className="mdnotes-main-firstnote" onClick={createNewNote}>
+            <button className='mdnotes-main-firstnote' onClick={createNewNote}>
               Create one now
             </button>
           </div>

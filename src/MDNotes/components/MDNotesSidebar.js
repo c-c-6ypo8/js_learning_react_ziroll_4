@@ -1,12 +1,11 @@
 import './MDNotesSidebar.css'
 
 export default function MDNotesSidebar(props) {
+  /* This action moved to a new function, because propagation must be handled 
+  in this particular module */
   const handleDelete = (index, event) => {
     event.stopPropagation()
     props.deleteNote(index)
-    if (props.notes[index].id === props.currentNote.id) {
-      props.setCurrentNoteId(props.notes[index + 1]?.id ?? props.notes[0].id)
-    }
   }
 
   const noteElements = props.notes.map((note, index) => (
