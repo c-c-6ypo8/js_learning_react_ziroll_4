@@ -1,4 +1,6 @@
 import './index.css'
+import './libs/clear.css'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { FFactsApp } from './FFacts/FFactsApp'
@@ -40,4 +42,4 @@ for (let app of apps) {
   })
 }
 
-choose(linkMDNotes)
+choose(linkTenzies)

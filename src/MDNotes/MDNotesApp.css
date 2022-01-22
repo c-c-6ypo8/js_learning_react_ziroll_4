@@ -6,14 +6,13 @@
   --border-radius: 6px;
   width: 95vw;
   height: 100%;
-  border-radius: 1px;
   border: 1px solid #c5c5c5;
   overflow: hidden;
   font-family: 'Karla', sans-serif;
   padding: 10px;
   margin-bottom: 10px;
   background-color: var(--bg-color);
-  border-radius: var(--border-radius);  
+  border-radius: var(--border-radius);
 }
 
 button:focus {
@@ -27,7 +26,6 @@ button:focus {
 
 .gutter {
   background-color: var(--bg-color);
-
   background-repeat: no-repeat;
   background-position: 50%;
 }

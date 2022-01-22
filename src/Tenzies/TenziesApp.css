@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@100;400;600&display=swap');
+
+.tenzies-app {
+  font-family: 'Karla', sans-serif;
+  --main-color: #5035ff;
+  --bg-color: #f5f5f5;
+  --border-radius: 10px;
+  --side-size: 88vmin;
+  width: var(--side-size);
+  border: 1px solid #c5c5c5;
+  overflow: hidden;
+  margin: 5%;
+  padding: 10% 8% 5%;
+  background-color: var(--bg-color);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.tenzies-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+.tenzies-header > h1 {
+  font-weight: bold;
+  font-size: 2.4rem;
+  margin-bottom: 2%;
+}
+
+.tenzies-header > desc {
+  width: 75%;
+  font-size: 1rem;
+}
+
+.tenzies-rollbutton {
+  width: fit-content;
+  padding: 4% 14%;
+  background-color: var(--main-color);
+  text-align: center;
+  vertical-align: middle;
+  color: white;
+  font-weight: bold;
+  font-size: 1.4rem;
+  border-radius: 7px;
+  margin: 20px;
+  cursor: pointer;
+}
+
+.tenzies-rollbutton:hover {
+  background-color: #4327ff;
+}
+
+.tenzies-rollbutton:active {
+  background-color: #4632cc;
+}
+
+.tenzies-dice {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12% 6%;
+  grid-auto-flow: row;  
+  margin: 9%;
+  width: 100%;
+}
+
+.tenzies-dice-die {
+  border-radius: var(--border-radius);
+  width: calc(var(--side-size) / 9);
+  height: calc(var(--side-size) / 9);
+  margin: 2.4%;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.281);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.tenzies-dice-die-selected {
+  background-color: #5ff792;
+}
+
+@media screen and (max-width: 500px) {
+  .tenzies-app {
+    --side-size: 100vmin;
+  }
+}

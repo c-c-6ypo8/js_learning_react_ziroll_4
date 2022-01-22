@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
 
 * {
-  box-sizing: border-box;
-  margin: 0;
   --app-width: 550px;
 }
 
@@ -12,7 +10,11 @@ body {
   align-items: center;
   background-color: #e5e5e5;
   font-family: 'Poppins', sans-serif;
-  color: #222222;  
+  color: #222222;
+}
+
+#root {
+  display: flex;
 }
 
 span {
@@ -35,4 +37,12 @@ span {
 .chosen {
   font-weight: bold;
   opacity: 1 !important;
+}
+
+@media screen and (max-width: 800px) {
+  .links {    
+    width: auto;
+    gap: 20px;
+    padding: 15px 40px;
+  }
 }

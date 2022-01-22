@@ -5,7 +5,7 @@ import Split from 'react-split'
 import './MDNotesApp.css'
 import MDNotesSidebar from './components/MDNotesSidebar'
 import MDNotesEditor from './components/MDNotesEditor'
-import { moveArrayElement } from './libs/arrays'
+import { moveArrayElement } from '../libs/arrays'
 
 const notesLSName = 'notes'
 
