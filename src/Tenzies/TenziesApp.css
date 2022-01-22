@@ -27,13 +27,13 @@
   text-align: center;
 }
 
-.tenzies-header > h1 {
+.tenzies-header-title {
   font-weight: bold;
   font-size: 2.4rem;
   margin-bottom: 2%;
 }
 
-.tenzies-header > desc {
+.tenzies-header-desc {
   width: 75%;
   font-size: 1rem;
 }
