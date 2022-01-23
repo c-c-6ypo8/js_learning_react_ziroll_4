@@ -19,47 +19,6 @@
   justify-content: space-around;
 }
 
-.tenzies-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  text-align: center;
-}
-
-.tenzies-header-title {
-  font-weight: bold;
-  font-size: 2.4rem;
-  margin-bottom: 2%;
-}
-
-.tenzies-header-desc {
-  width: 75%;
-  font-size: 1rem;
-}
-
-.tenzies-rollbutton {
-  width: fit-content;
-  padding: 4% 14%;
-  background-color: var(--main-color);
-  text-align: center;
-  vertical-align: middle;
-  color: white;
-  font-weight: bold;
-  font-size: 1.4rem;
-  border-radius: 7px;
-  margin: 20px;
-  cursor: pointer;
-}
-
-.tenzies-rollbutton:hover {
-  background-color: #4327ff;
-}
-
-.tenzies-rollbutton:active {
-  background-color: #4632cc;
-}
-
 .tenzies-dice {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;

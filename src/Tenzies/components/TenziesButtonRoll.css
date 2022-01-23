@@ -1,0 +1,24 @@
+.tenzies-rollbutton {
+  width: fit-content;
+  padding: 4% 14%;
+  background-color: var(--main-color);
+  text-align: center;
+  vertical-align: middle;
+  color: white;
+  font-weight: bold;
+  font-size: 1.4rem;
+  border-radius: 7px;
+  margin: 20px;
+  cursor: pointer;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.281);
+}
+
+.tenzies-rollbutton:hover {
+  background-color: #4327ff;
+}
+
+.tenzies-rollbutton:active {
+  background-color: #4632cc;
+  transform: translateY(3px);
+  transition: transform 0.15s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}

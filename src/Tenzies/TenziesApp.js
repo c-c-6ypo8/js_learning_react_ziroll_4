@@ -1,8 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { TenziesDie } from './components/TenziesDie'
+import Confetti from 'react-confetti'
+import { useWindowSize } from 'react-use'
 import './TenziesApp.css'
+import { TenziesDie } from './components/TenziesDie'
+import { TenziesButtonRoll } from './components/TenziesButtonRoll'
+import { TenziesHeader } from './components/TenziesHeader'
 
 export const TenziesApp = () => {
+  const { width, height } = useWindowSize()
   const dieRoll = () => {
     return Math.floor(Math.random() * 6) + 1
   }
@@ -31,48 +36,71 @@ export const TenziesApp = () => {
   }
 
   const dieSelectToggle = (dieId) => {
-    setDice((prev) => {
-      return prev.map((die) => {
-        console.log('before', gatheredValue, die.id, die.value)
+    setDice((prev) =>
+      prev.map((die) => {
         if (die.id === dieId) {
-          if (!gatheredValue) setGatheredValue(die.value)
-          return die.value === gatheredValue
-            ? { ...die, selected: !die.selected }
-            : die
+          if (!gatheredValue) {
+            setGatheredValue(die.value)
+            return { ...die, selected: !die.selected }
+          }
+          if (die.value === gatheredValue) {
+            return { ...die, selected: !die.selected }
+          } else {
+            return die
+          }
         } else {
           return die
         }
-      })
-    })
+      }),
+    )
   }
 
-  const diceElements = dice.map((die) => (
-    <TenziesDie die={die} key={die.id} onSelect={dieSelectToggle} />
-  ))
+  const diceElements = (
+    <section className='tenzies-dice'>
+      {dice.map((die) => (
+        <TenziesDie
+          die={die}
+          key={die.id}
+          onSelect={dieSelectToggle}
+          rightValue={gatheredValue}
+        />
+      ))}
+    </section>
+  )
+
+  const newGameStart = () => {
+    setDice(diceGenerate(10))
+  }
+
+  const areAllUnchecked = useCallback(() => {
+    return dice.filter((die) => die.selected).length === 0
+  }, [dice])
 
   const isVictorious = useCallback(() => {
-    return dice.filter((die) => (die.selected ? false : true)).length === 0
+    return dice.filter((die) => !die.selected).length === 0
   }, [dice])
 
   useEffect(() => {
+    if (areAllUnchecked()) setGatheredValue(undefined)
     if (isVictorious()) {
       console.log('You won!')
     }
-  }, [isVictorious])
+  }, [areAllUnchecked, isVictorious])
 
   return (
     <main className='tenzies-app'>
-      <div className='tenzies-header'>
-        <h1 className='tenzies-header-title'>Tenzies</h1>
-        <div className='tenzies-header-desc'>
-          Roll until all dice are the same. Click each die to freeze it at its
-          current value between rolls.
-        </div>
-      </div>
-      <div className='tenzies-dice'>{diceElements}</div>
-      <div className='no-selection tenzies-rollbutton' onClick={diceRoll}>
-        Roll
-      </div>
+      {isVictorious() && <Confetti width={width} height={height} />}
+      <TenziesHeader
+        isVictorious={isVictorious()}
+        newGame={areAllUnchecked()}
+        gatheredValue={gatheredValue}
+      />
+      {diceElements}
+      <TenziesButtonRoll
+        isVictorious={isVictorious()}
+        diceRoll={diceRoll}
+        newGameStart={newGameStart}
+      />
     </main>
   )
 }
