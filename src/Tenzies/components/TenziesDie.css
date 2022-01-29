@@ -1,4 +1,4 @@
-.tenzies-dice-die {
+.tenzies-die {
   border-radius: var(--border-radius);
   width: calc(var(--side-size) / 9);
   height: calc(var(--side-size) / 9);
@@ -8,18 +8,70 @@
   align-items: center;
   justify-content: center;
   font-size: 2rem;
-  font-weight: bold;
+  font-weight: bold;  
 }
 
-.tenzies-dice-die-selected {
+.tenzies-die-dot {
+  grid-area: dot;
+  background-color: var(--font-color);
+  border-radius: 50%;
+  width: calc(var(--side-size) / 32);
+  height: calc(var(--side-size) / 32);
+}
+
+.tenzies-die-one {
+  display: grid;    
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;  
+  grid-template-areas:
+    '. . .'
+    '. dot .'
+    '. . .';
+}
+
+.tenzies-die-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;  
+  grid-template-areas:
+    '. . dot'
+    '. . .'
+    'dot . .';
+}
+
+.tenzies-die-three {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tenzies-die-four {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tenzies-die-five {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tenzies-die-six {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tenzies-die-selected {
   background-color: #5ff792;
 }
 
-.tenzies-dice-die-reaction-wrong {
+.tenzies-die-reaction-wrong {
   animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
-.tenzies-dice-die-reaction-right {
+.tenzies-die-reaction-right {
   animation: press 0.3s cubic-bezier(0.36, 0.07, 0.19, 0.97);
 }
 

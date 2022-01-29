@@ -26,6 +26,7 @@ export const TenziesApp = () => {
 
   const [dice, setDice] = useState(() => diceGenerate(10))
   const [gatheredValue, setGatheredValue] = useState()
+  const [timer, setTimer] = useState(0)
 
   const diceRoll = () => {
     setDice((prev) => {
@@ -55,6 +56,25 @@ export const TenziesApp = () => {
     )
   }
 
+  const newGameStart = () => {
+    setDice(diceGenerate(10))
+  }
+  
+  const areAllUnchecked = useCallback(() => {
+    return dice.filter((die) => die.selected).length === 0
+  }, [dice])
+  
+  const isVictorious = useCallback(() => {
+    return dice.filter((die) => !die.selected).length === 0
+  }, [dice])
+  
+  useEffect(() => {
+    if (areAllUnchecked()) setGatheredValue(undefined)
+    if (isVictorious()) {
+      console.log('You won!')
+    }
+  }, [areAllUnchecked, isVictorious])
+  
   const diceElements = (
     <section className='tenzies-dice'>
       {dice.map((die) => (
@@ -68,25 +88,6 @@ export const TenziesApp = () => {
     </section>
   )
 
-  const newGameStart = () => {
-    setDice(diceGenerate(10))
-  }
-
-  const areAllUnchecked = useCallback(() => {
-    return dice.filter((die) => die.selected).length === 0
-  }, [dice])
-
-  const isVictorious = useCallback(() => {
-    return dice.filter((die) => !die.selected).length === 0
-  }, [dice])
-
-  useEffect(() => {
-    if (areAllUnchecked()) setGatheredValue(undefined)
-    if (isVictorious()) {
-      console.log('You won!')
-    }
-  }, [areAllUnchecked, isVictorious])
-
   return (
     <main className='tenzies-app'>
       {isVictorious() && <Confetti width={width} height={height} />}
@@ -94,13 +95,14 @@ export const TenziesApp = () => {
         isVictorious={isVictorious()}
         newGame={areAllUnchecked()}
         gatheredValue={gatheredValue}
+        timer={timer}
       />
       {diceElements}
       <TenziesButtonRoll
         isVictorious={isVictorious()}
         diceRoll={diceRoll}
         newGameStart={newGameStart}
-      />
+      />      
     </main>
   )
-}
+}  
