@@ -1,8 +1,44 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { dieRoll } from '../../libs/random'
 import './TenziesDie.css'
 
 export const TenziesDie = (props) => {
+  const generateDieImage = (dieValue) => {
+    const dieDotsNames = ['one', 'two', 'three', 'four', 'five', 'six']
+    const dieDots = Array.apply(null, Array(dieValue)).map((value, index) => (
+      <div className='tenzies-die-dot' key={index}>
+        &nbsp;
+      </div>
+    ))
+    return (
+      <div className={`tenzies-die-${dieDotsNames[dieValue - 1]}`}>
+        {dieDots}
+      </div>
+    )
+  }
+
   const [dieReaction, setDieReaction] = useState()
+  const [dieImage, setDieImage] = useState(() =>
+    generateDieImage(props.die.value),
+  )
+
+  useEffect(() => {
+    if (!props.static) {
+      const timeOutStep = props.timeOut / Math.floor(Math.random() * 10 + 2)
+      const generateDieImages = (time, value) => {
+        time > 0 &&
+          setTimeout(() => {
+            if (time - timeOutStep > 0) {
+              setDieImage(generateDieImage(dieRoll()))
+              generateDieImages(time - timeOutStep)
+            } else {
+              setDieImage(generateDieImage(props.die.value))
+            }
+          }, timeOutStep)
+      }
+      generateDieImages(props.timeOut)
+    }
+  }, [props.die.value, props.static, props.timeOut])
 
   useEffect(() => {
     setTimeout(() => setDieReaction(undefined), 820)
@@ -21,30 +57,16 @@ export const TenziesDie = (props) => {
     }
   }
 
-  const dieDotted = useMemo(() => {
-    const dieDotsNames = ['one', 'two', 'three', 'four', 'five', 'six']
-    const dieDots = Array.apply(null, Array(props.die.value)).map(
-      (value, index) => (
-        <div className='tenzies-die-dot' key={index}>
-          &nbsp;
-        </div>
-      ),
-    )    
-    return (
-      <div className={`tenzies-die-${dieDotsNames[props.die.value - 1]}`}>
-        {dieDots}
-      </div>
-    )
-  }, [props.die.value])
-
   return (
     <div
       onClick={handleClick}
-      className={`no-selection tenzies-die ${
-        props.die?.selected ? 'tenzies-die-selected' : ''
-      } ${dieReaction ? 'tenzies-die-reaction-' + dieReaction : ''}`}
+      className={
+        'no-selection tenzies-die' +
+        (props.die?.selected ? ' tenzies-die-selected ' : '') +
+        (dieReaction ? ` tenzies-die-reaction-${dieReaction}` : '')
+      }
     >
-      {dieDotted}
+      {dieImage}
     </div>
   )
 }

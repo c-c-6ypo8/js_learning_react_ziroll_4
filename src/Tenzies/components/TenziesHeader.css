@@ -50,9 +50,4 @@
   font-size: 24px;
 }
 
-.tenzies-header-die .tenzies-die-dot {
-  width: calc(var(--side-size) / 38);
-  height: calc(var(--side-size) / 38);
-}
-
  

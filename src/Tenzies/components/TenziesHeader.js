@@ -21,8 +21,8 @@ export const TenziesHeader = ({ isVictorious, newGame, gatheredValue }) => {
       <div className='tenzies-header-stats'>
         <div className='tenzies-header-stats-gathering'>
           You gather:
-          <div className="tenzies-header-die">
-            <TenziesDie die={{value: gatheredValue}} />
+          <div className='tenzies-header-die'>
+            <TenziesDie die={{ value: gatheredValue }} static={true} />
           </div>
         </div>
         <div className='tenzies-header-stats-time'>

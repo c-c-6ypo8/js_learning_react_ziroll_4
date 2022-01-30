@@ -5,12 +5,10 @@ import './TenziesApp.css'
 import { TenziesDie } from './components/TenziesDie'
 import { TenziesButtonRoll } from './components/TenziesButtonRoll'
 import { TenziesHeader } from './components/TenziesHeader'
+import { dieRoll } from '../libs/random'
 
 export const TenziesApp = () => {
   const { width, height } = useWindowSize()
-  const dieRoll = () => {
-    return Math.floor(Math.random() * 6) + 1
-  }
 
   const diceGenerate = (quantity) => {
     let dice = []
@@ -27,6 +25,8 @@ export const TenziesApp = () => {
   const [dice, setDice] = useState(() => diceGenerate(10))
   const [gatheredValue, setGatheredValue] = useState()
   const [timer, setTimer] = useState(0)
+  // Timeout for blocking Roll button and for dice roll time
+  const timeOut = 1000
 
   const diceRoll = () => {
     setDice((prev) => {
@@ -42,6 +42,7 @@ export const TenziesApp = () => {
         if (die.id === dieId) {
           if (!gatheredValue) {
             setGatheredValue(die.value)
+            console.log('Gathered value set to', die.value)
             return { ...die, selected: !die.selected }
           }
           if (die.value === gatheredValue) {
@@ -59,27 +60,28 @@ export const TenziesApp = () => {
   const newGameStart = () => {
     setDice(diceGenerate(10))
   }
-  
+
   const areAllUnchecked = useCallback(() => {
     return dice.filter((die) => die.selected).length === 0
   }, [dice])
-  
+
   const isVictorious = useCallback(() => {
     return dice.filter((die) => !die.selected).length === 0
   }, [dice])
-  
+
   useEffect(() => {
     if (areAllUnchecked()) setGatheredValue(undefined)
     if (isVictorious()) {
       console.log('You won!')
     }
   }, [areAllUnchecked, isVictorious])
-  
+
   const diceElements = (
     <section className='tenzies-dice'>
       {dice.map((die) => (
         <TenziesDie
           die={die}
+          timeOut={timeOut}
           key={die.id}
           onSelect={dieSelectToggle}
           rightValue={gatheredValue}
@@ -102,7 +104,8 @@ export const TenziesApp = () => {
         isVictorious={isVictorious()}
         diceRoll={diceRoll}
         newGameStart={newGameStart}
-      />      
+        timeOut={timeOut}
+      />
     </main>
   )
-}  
+}
