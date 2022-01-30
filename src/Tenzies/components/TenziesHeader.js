@@ -2,7 +2,7 @@ import './TenziesHeader.css'
 import './TenziesDie.css'
 import { TenziesDie } from './TenziesDie'
 
-export const TenziesHeader = ({ isVictorious, newGame, gatheredValue }) => {
+export const TenziesHeader = (props) => {
   const headerStartup = (
     <section className='tenzies-header'>
       <h1 className='tenzies-header-title'>Tenzies</h1>
@@ -13,21 +13,24 @@ export const TenziesHeader = ({ isVictorious, newGame, gatheredValue }) => {
     </section>
   )
 
-  const date = new Date()
-  const currentTime = `${date.getMinutes()}:${date.getSeconds()}`
-
   const headerStats = (
     <section className='tenzies-header'>
       <div className='tenzies-header-stats'>
         <div className='tenzies-header-stats-gathering'>
-          You gather:
+          <div className='tenzies-header-stats-title'>You gather</div>
           <div className='tenzies-header-die'>
-            <TenziesDie die={{ value: gatheredValue }} static={true} />
+            <TenziesDie die={{ value: props.gatheredValue }} static={true} />
+          </div>
+        </div>
+        <div className='tenzies-header-stats-rolls'>
+          <div className='tenzies-header-stats-title'>Rerolls made</div>
+          <div className='tenzies-header-stats-rollscounter'>
+            {props.rollCounter}
           </div>
         </div>
         <div className='tenzies-header-stats-time'>
-          Time passed:
-          <div className='tenzies-header-stats-time-timer'>{currentTime}</div>
+          <div className='tenzies-header-stats-title'>Time passed</div>
+          <div className='tenzies-header-stats-time-timer'>{props.timer}</div>
         </div>
       </div>
     </section>
@@ -36,12 +39,16 @@ export const TenziesHeader = ({ isVictorious, newGame, gatheredValue }) => {
   const headerCongrats = (
     <section className='tenzies-header'>
       <h1 className='tenzies-header-title'>Congratulations!</h1>
-      <div className='tenzies-header-desc'>You've gathered all the dice!</div>
+      <span className='tenzies-header-desc'>
+        You've gathered all dice
+        <br /> in <strong>{props.timer}</strong> seconds and
+        <strong> {props.rollCounter}</strong> rerolls!
+      </span>
     </section>
   )
   return (
-    (isVictorious && headerCongrats) ||
-    (newGame && headerStartup) ||
+    (props.isVictorious && headerCongrats) ||
+    (props.newGame && headerStartup) ||
     headerStats
   )
 }

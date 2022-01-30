@@ -3,9 +3,9 @@ import Confetti from 'react-confetti'
 import { useWindowSize } from 'react-use'
 import './TenziesApp.css'
 import { TenziesDie } from './components/TenziesDie'
-import { TenziesButtonRoll } from './components/TenziesButtonRoll'
+import { TenziesButtonRoll } from './components/TenziesRollButton'
 import { TenziesHeader } from './components/TenziesHeader'
-import { dieRoll } from '../libs/random'
+import { dieRoll as rollDie } from '../libs/random'
 
 export const TenziesApp = () => {
   const { width, height } = useWindowSize()
@@ -16,7 +16,7 @@ export const TenziesApp = () => {
       dice.push({
         id: dieNum,
         selected: false,
-        value: dieRoll(),
+        value: rollDie(),
       })
     }
     return dice
@@ -25,13 +25,17 @@ export const TenziesApp = () => {
   const [dice, setDice] = useState(() => diceGenerate(10))
   const [gatheredValue, setGatheredValue] = useState()
   const [timer, setTimer] = useState(0)
-  // Timeout for blocking Roll button and for dice roll time
-  const timeOut = 1000
+  const [timerId, setTimerId] = useState()
+  const [rollCounter, setRollCounter] = useState(0)
 
-  const diceRoll = () => {
+  // Timeout for blocking Roll button and for dice roll time
+  const timeOut = 750
+
+  const rollDice = () => {
+    setRollCounter((prev) => prev + 1)
     setDice((prev) => {
       return prev.map((die) =>
-        die.selected ? die : { ...die, value: dieRoll() },
+        die.selected ? die : { ...die, value: rollDie() },
       )
     })
   }
@@ -42,7 +46,7 @@ export const TenziesApp = () => {
         if (die.id === dieId) {
           if (!gatheredValue) {
             setGatheredValue(die.value)
-            console.log('Gathered value set to', die.value)
+            startTimer()
             return { ...die, selected: !die.selected }
           }
           if (die.value === gatheredValue) {
@@ -57,11 +61,24 @@ export const TenziesApp = () => {
     )
   }
 
-  const newGameStart = () => {
+  const startTimer = () => {
+    const newTimer = setInterval(() => {
+      setTimer((prev) => prev + 1)
+    }, 1000)
+    setTimerId(newTimer)
+  }
+
+  const clearTimer = useCallback(() => {
+    clearInterval(timerId)
+    setTimerId()
+    setTimer(0)
+  }, [timerId])
+
+  const startNewGame = () => {
     setDice(diceGenerate(10))
   }
 
-  const areAllUnchecked = useCallback(() => {
+  const isNewGame = useCallback(() => {
     return dice.filter((die) => die.selected).length === 0
   }, [dice])
 
@@ -70,11 +87,13 @@ export const TenziesApp = () => {
   }, [dice])
 
   useEffect(() => {
-    if (areAllUnchecked()) setGatheredValue(undefined)
-    if (isVictorious()) {
-      console.log('You won!')
+    if (isNewGame()) {
+      setGatheredValue(undefined)
+      setRollCounter(0)
+      clearTimer()
     }
-  }, [areAllUnchecked, isVictorious])
+    if (isVictorious()) clearInterval(timerId)
+  }, [isNewGame, isVictorious, clearTimer, timerId])
 
   const diceElements = (
     <section className='tenzies-dice'>
@@ -95,15 +114,16 @@ export const TenziesApp = () => {
       {isVictorious() && <Confetti width={width} height={height} />}
       <TenziesHeader
         isVictorious={isVictorious()}
-        newGame={areAllUnchecked()}
+        newGame={isNewGame()}
         gatheredValue={gatheredValue}
         timer={timer}
+        rollCounter={rollCounter}
       />
       {diceElements}
       <TenziesButtonRoll
         isVictorious={isVictorious()}
-        diceRoll={diceRoll}
-        newGameStart={newGameStart}
+        rollDice={rollDice}
+        startNewGame={startNewGame}
         timeOut={timeOut}
       />
     </main>

@@ -1,5 +1,5 @@
-const dieRoll = () => {
+const rollDie = () => {
   return Math.floor(Math.random() * 6) + 1
 }
 
-export { dieRoll }
+export { rollDie as dieRoll }

@@ -25,29 +25,31 @@
   justify-content: space-around;
 }
 
-.tenzies-header-stats-gathering {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-flow: column;
-}
-
+.tenzies-header-stats-gathering,
 .tenzies-header-stats-time {
   display: flex;
   flex-flow: column;
+  justify-content: space-between;
 }
 
-.tenzies-header-stats-time-timer {
-  margin-top: 19px;
-  font-size: 24px;
+.tenzies-header-stats-gathering {
+  align-items: center;
+}
+
+.tenzies-header-stats-time-timer,
+.tenzies-header-stats-rollscounter {
+  font-size: 40px;
   font-weight: bold;
+  display: flex;
+  flex-flow: column;
+}
+
+.tenzies-header-stats-title {
+  margin-bottom: 10px;
 }
 
 .tenzies-header-die .tenzies-die {
-  margin-top: 10px;
   width: calc(var(--side-size) / 12);
   height: calc(var(--side-size) / 12);
   font-size: 24px;
 }
-
- 
