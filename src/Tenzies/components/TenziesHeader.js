@@ -38,7 +38,7 @@ export const TenziesHeader = (props) => {
 
   const headerCongrats = (
     <section className='tenzies-header'>
-      <h1 className='tenzies-header-title'>Congratulations!</h1>
+      <h1 className='tenzies-header-title'>Congratulations! 🏆 </h1>
       <span className='tenzies-header-desc'>
         You've gathered all dice
         <br /> in <strong>{props.timer}</strong> seconds and

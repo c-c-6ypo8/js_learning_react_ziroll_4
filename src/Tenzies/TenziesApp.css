@@ -4,12 +4,12 @@
   font-family: 'Karla', sans-serif;
   --main-color: #5035ff;
   --bg-color: #f5f5f5;
+  --border-color: #c5c5c5;
   --border-radius: 10px;
   --side-size: 88vmin;
   --font-color: rgb(48, 48, 48);
   width: var(--side-size);
-  border: 1px solid #c5c5c5;
-  overflow: hidden;
+  border: 1px solid var(--border-color);  
   margin: 5%;
   padding: 10% 8% 5%;
   background-color: var(--bg-color);
@@ -19,6 +19,7 @@
   align-items: center;
   justify-content: space-around;
   color: var(--font-color);
+  position: relative;
 }
 
 .tenzies-dice {
@@ -26,7 +27,7 @@
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 12% 6%;
-  grid-auto-flow: row;  
+  grid-auto-flow: row;
   margin: 9%;
   width: 100%;
 }

@@ -1,0 +1,16 @@
+.tenzies-closebutton {
+  top: 20px;
+  right: 20px;
+  opacity: 1;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 12px;  
+  background-color: var(--hovered-bg);
+  position: absolute;
+  color: #b1b1b1;  
+  cursor: pointer;
+}
+
+.tenzies-closebutton:hover {
+  color: rgb(0, 0, 0);  
+}

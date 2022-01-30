@@ -6,6 +6,7 @@ import { TenziesDie } from './components/TenziesDie'
 import { TenziesButtonRoll } from './components/TenziesRollButton'
 import { TenziesHeader } from './components/TenziesHeader'
 import { dieRoll as rollDie } from '../libs/random'
+import { TenziesHighScore } from './components/TenziesHighScore'
 
 export const TenziesApp = () => {
   const { width, height } = useWindowSize()
@@ -110,22 +111,25 @@ export const TenziesApp = () => {
   )
 
   return (
-    <main className='tenzies-app'>
+    <>
       {isVictorious() && <Confetti width={width} height={height} />}
-      <TenziesHeader
-        isVictorious={isVictorious()}
-        newGame={isNewGame()}
-        gatheredValue={gatheredValue}
-        timer={timer}
-        rollCounter={rollCounter}
-      />
-      {diceElements}
-      <TenziesButtonRoll
-        isVictorious={isVictorious()}
-        rollDice={rollDice}
-        startNewGame={startNewGame}
-        timeOut={timeOut}
-      />
-    </main>
+      <main className='tenzies-app'>
+        <TenziesHighScore />
+        <TenziesHeader
+          isVictorious={isVictorious()}
+          newGame={isNewGame()}
+          gatheredValue={gatheredValue}
+          timer={timer}
+          rollCounter={rollCounter}
+        />
+        {diceElements}
+        <TenziesButtonRoll
+          isVictorious={isVictorious()}
+          rollDice={rollDice}
+          startNewGame={startNewGame}
+          timeOut={timeOut}
+        />
+      </main>
+    </>
   )
 }

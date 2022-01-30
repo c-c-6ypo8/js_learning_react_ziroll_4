@@ -1,0 +1,29 @@
+.tenzies-highscore {
+  position: absolute;
+  top: 5%;
+  z-index: 1;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 30px;
+  width: 90%;
+  height: 90%;    
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.281);
+  display: flex;
+  flex-flow: column;
+  align-items: center;  
+  overflow: hidden;
+}
+
+.tenzies-highscore > h1 {
+  font-size: 30px;
+  margin-bottom: 30px;  
+}
+
+.tenzies-highscore > ul {    
+  width: 80%;
+  line-height: 150%;
+  font-size: 20px;
+  list-style: decimal;
+  overflow-y: auto;
+}
