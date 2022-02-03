@@ -32,6 +32,12 @@
   width: 100%;
 }
 
+.tenzies-button-group {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 @media screen and (max-width: 500px) {
   .tenzies-app {
     --side-size: 100vmin;

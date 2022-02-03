@@ -1,6 +1,4 @@
-.tenzies-closebutton {
-  top: 20px;
-  right: 20px;
+.tenzies-servicebutton {  
   opacity: 1;
   font-weight: 600;
   font-size: 22px;
@@ -11,6 +9,16 @@
   cursor: pointer;
 }
 
-.tenzies-closebutton:hover {
+.tenzies-servicebutton:hover {
   color: rgb(0, 0, 0);  
+}
+
+.tenzies-servicebutton-topright {
+  top: 20px;
+  right: 20px;
+}
+
+.tenzies-servicebutton-bottomright {
+  bottom: 20px;
+  right: 20px;
 }

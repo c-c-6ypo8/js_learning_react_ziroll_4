@@ -26,10 +26,10 @@
 }
 
 .tenzies-header-stats-gathering,
-.tenzies-header-stats-time {
+.tenzies-header-stats-time,
+.tenzies-header-stats-rolls {
   display: flex;
   flex-flow: column;
-  justify-content: space-between;
 }
 
 .tenzies-header-stats-gathering {
@@ -42,6 +42,8 @@
   font-weight: bold;
   display: flex;
   flex-flow: column;
+  justify-content: center;
+  height: 100%;
 }
 
 .tenzies-header-stats-title {
@@ -51,5 +53,4 @@
 .tenzies-header-die .tenzies-die {
   width: calc(var(--side-size) / 12);
   height: calc(var(--side-size) / 12);
-  font-size: 24px;
 }

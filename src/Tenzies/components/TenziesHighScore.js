@@ -1,27 +1,55 @@
 import { useState } from 'react'
-import { TenziesCloseButton } from './TenziesCloseButton'
+import { TenziesServiceButton } from './TenziesServiceButton'
+import { TenziesDie } from './TenziesDie'
+import './TenziesDie.css'
 import './TenziesHighScore.css'
 
 export const TenziesHighScore = (props) => {
-  const [visible, setVisible] = useState(true)
+  const [highScoreVisible, setHighScoreVisible] = useState(false)
 
-  const handleClose = () => {
-    setVisible(false)
-  }
+  const highScoreElements = props.highScore.data.map((scoreLine) => (
+    <li
+      key={scoreLine.id}
+      className={scoreLine.last ? 'tenzies-highscore-currentline' : ''}
+    >
+      <div className='tenzies-highscore-die'>
+        <TenziesDie die={{ value: scoreLine.value }} static={true} />
+      </div>
+      <div className='tenzies-highscore-line-text'>
+        <div>
+          {scoreLine.rolls} rolls in {scoreLine.time} seconds
+        </div>
+        <div className='tenzies-highscore-line-text-date'>{scoreLine.date}</div>
+      </div>
+    </li>
+  ))
+
   return (
-    <section className={'tenzies-highscore' + (!visible ? ' hidden' : '')}>
-      <TenziesCloseButton close={handleClose} />
-      <h1>High Score</h1>
-      <ul>
-        <li>lorem</li>
-        <li>lorem</li>
-        <li>lorem</li>
-        <li>lorem</li>
-        <li>lorem</li>
-        <li>lorem</li>
-        <li>lorem</li>
-        <li>lorem</li>
-      </ul>
-    </section>
+    <>
+      <div
+        className='tenzies-highscorebutton no-selection'
+        onClick={() => setHighScoreVisible(true)}
+      >
+        High Score
+      </div>
+      <section
+        className={'tenzies-highscore' + (!highScoreVisible ? ' hidden' : '')}
+      >
+        <TenziesServiceButton
+          symbol='✕'
+          position='topright'
+          title='Close Score Table'
+          onClick={() => setHighScoreVisible(false)}
+        />
+        <TenziesServiceButton
+          symbol='🗑'
+          position='bottomright'
+          title='Clear Score Table'
+          onClick={() => props.setHighScore({ data: [] })}
+        />
+        <h1>High Score</h1>
+        <ol>{highScoreElements}</ol>
+      </section>
+    </>
   )
 }

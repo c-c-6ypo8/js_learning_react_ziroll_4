@@ -23,7 +23,7 @@ export const TenziesHeader = (props) => {
           </div>
         </div>
         <div className='tenzies-header-stats-rolls'>
-          <div className='tenzies-header-stats-title'>Rerolls made</div>
+          <div className='tenzies-header-stats-title'>Rolls made</div>
           <div className='tenzies-header-stats-rollscounter'>
             {props.rollCounter}
           </div>
@@ -38,11 +38,11 @@ export const TenziesHeader = (props) => {
 
   const headerCongrats = (
     <section className='tenzies-header'>
-      <h1 className='tenzies-header-title'>Congratulations! 🏆 </h1>
+      <h1 className='tenzies-header-title'> 🏆 Congratulations!</h1>
       <span className='tenzies-header-desc'>
         You've gathered all dice
         <br /> in <strong>{props.timer}</strong> seconds and
-        <strong> {props.rollCounter}</strong> rerolls!
+        <strong> {props.rollCounter}</strong> rolls!
       </span>
     </section>
   )

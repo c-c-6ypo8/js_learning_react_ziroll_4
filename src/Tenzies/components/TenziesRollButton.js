@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './TenziesRollButton.css'
 
-export const TenziesButtonRoll = (props) => {
+export const TenziesRollButton = (props) => {
   const [buttonBlock, setButtonBlock] = useState(false)
   const handleClick = () => {
     if (!buttonBlock) {

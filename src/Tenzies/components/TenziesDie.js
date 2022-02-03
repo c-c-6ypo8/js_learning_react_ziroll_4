@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { dieRoll } from '../../libs/random'
+import { rollDie } from '../../libs/random'
 import './TenziesDie.css'
 
 export const TenziesDie = (props) => {
-  const generateDieImage = (dieValue) => {
+  const generateDieImage = (dieValue) => {    
     const dieDotsNames = ['one', 'two', 'three', 'four', 'five', 'six']
     const dieDots = Array.apply(null, Array(dieValue)).map((value, index) => (
       <div className='tenzies-die-dot' key={index}>
@@ -18,18 +18,26 @@ export const TenziesDie = (props) => {
   }
 
   const [dieReaction, setDieReaction] = useState()
+  const dieReactionTimeout = 820
   const [dieImage, setDieImage] = useState(() =>
     generateDieImage(props.die.value),
   )
 
   useEffect(() => {
-    if (!props.static) {
-      const timeOutStep = props.timeOut / Math.floor(Math.random() * 10 + 2)
-      const generateDieImages = (time, value) => {
+    if (!props.static && !props.die.selected) {
+      const timeOutStep = Math.floor(
+        props.timeOut / Math.floor(Math.random() * 10 + 2),
+      )
+      const generateDieImages = (time) => {
+        let currentValue = props.die.value
         time > 0 &&
           setTimeout(() => {
             if (time - timeOutStep > 0) {
-              setDieImage(generateDieImage(dieRoll()))
+              let generatedValue
+              do {
+                generatedValue = rollDie()
+              } while (generatedValue === currentValue)
+              setDieImage(generateDieImage(generatedValue))
               generateDieImages(time - timeOutStep)
             } else {
               setDieImage(generateDieImage(props.die.value))
@@ -38,10 +46,11 @@ export const TenziesDie = (props) => {
       }
       generateDieImages(props.timeOut)
     }
-  }, [props.die.value, props.static, props.timeOut])
+  }, [props.rollCounter, props.die, props.static, props.timeOut])
 
+  // Resets die reaction after timeout
   useEffect(() => {
-    setTimeout(() => setDieReaction(undefined), 820)
+    setTimeout(() => setDieReaction(undefined), dieReactionTimeout)
   }, [dieReaction])
 
   const handleClick = () => {
