@@ -2,8 +2,15 @@ import { useEffect, useState } from 'react'
 import { rollDie } from '../../libs/random'
 import './TenziesDie.css'
 
-export const TenziesDie = (props) => {
-  const generateDieImage = (dieValue) => {    
+export const TenziesDie = ({
+  die,
+  isStatic,
+  timeOut,
+  rollCounter,
+  onSelect,
+  rightValue,
+}) => {
+  const generateDieImage = (dieValue) => {
     const dieDotsNames = ['one', 'two', 'three', 'four', 'five', 'six']
     const dieDots = Array.apply(null, Array(dieValue)).map((value, index) => (
       <div className='tenzies-die-dot' key={index}>
@@ -19,17 +26,15 @@ export const TenziesDie = (props) => {
 
   const [dieReaction, setDieReaction] = useState()
   const dieReactionTimeout = 820
-  const [dieImage, setDieImage] = useState(() =>
-    generateDieImage(props.die.value),
-  )
+  const [dieImage, setDieImage] = useState(() => generateDieImage(die.value))
 
   useEffect(() => {
-    if (!props.static && !props.die.selected) {
+    if (!isStatic && !die.selected) {
       const timeOutStep = Math.floor(
-        props.timeOut / Math.floor(Math.random() * 10 + 2),
+        timeOut / Math.floor(Math.random() * 10 + 2),
       )
       const generateDieImages = (time) => {
-        let currentValue = props.die.value
+        let currentValue = die.value
         time > 0 &&
           setTimeout(() => {
             if (time - timeOutStep > 0) {
@@ -40,13 +45,13 @@ export const TenziesDie = (props) => {
               setDieImage(generateDieImage(generatedValue))
               generateDieImages(time - timeOutStep)
             } else {
-              setDieImage(generateDieImage(props.die.value))
+              setDieImage(generateDieImage(die.value))
             }
           }, timeOutStep)
       }
-      generateDieImages(props.timeOut)
+      generateDieImages(timeOut)
     }
-  }, [props.rollCounter, props.die, props.static, props.timeOut])
+  }, [rollCounter, die, isStatic, timeOut])
 
   // Resets die reaction after timeout
   useEffect(() => {
@@ -54,15 +59,15 @@ export const TenziesDie = (props) => {
   }, [dieReaction])
 
   const handleClick = () => {
-    if (props.onSelect) {
-      if (props.die.value === props.rightValue || !props.rightValue) {
-        if (!props.die.selected) {
+    if (onSelect) {
+      if (die.value === rightValue || !rightValue) {
+        if (!die.selected) {
           setDieReaction('right')
         }
       } else {
         setDieReaction('wrong')
       }
-      props.onSelect(props.die.id)
+      onSelect(die.id)
     }
   }
 
@@ -71,7 +76,7 @@ export const TenziesDie = (props) => {
       onClick={handleClick}
       className={
         'no-selection tenzies-die' +
-        (props.die?.selected ? ' tenzies-die-selected ' : '') +
+        (die?.selected ? ' tenzies-die-selected ' : '') +
         (dieReaction ? ` tenzies-die-reaction-${dieReaction}` : '')
       }
     >

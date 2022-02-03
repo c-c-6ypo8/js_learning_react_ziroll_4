@@ -110,8 +110,8 @@ export const TenziesApp = () => {
       setHighScore((prev) => {
         const newData = { data: [] }
         newData.data = [...prev.data]
-        // Setting off the 'last' flag (for marking current value in high score
-        // table)
+        /* Setting off the 'last' flag (for marking current score line in the 
+        high score table) */
         newData.data = newData.data.map((value) => ({
           ...value,
           last: false,
@@ -146,9 +146,10 @@ export const TenziesApp = () => {
     <section className='tenzies-dice'>
       {dice.map((die) => (
         <TenziesDie
-          die={die}
-          timeOut={timeOut}
           key={die.id}
+          die={die}
+          isStatic={false}
+          timeOut={timeOut}
           onSelect={dieSelectToggle}
           rightValue={gatheredValue}
           rollCounter={rollCounter}
@@ -163,7 +164,7 @@ export const TenziesApp = () => {
       <main className='tenzies-app'>
         <TenziesHeader
           isVictorious={isVictorious()}
-          newGame={isNewGame()}
+          isNewGame={isNewGame()}
           gatheredValue={gatheredValue}
           timer={timer}
           rollCounter={rollCounter}

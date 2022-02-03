@@ -1,20 +1,25 @@
 import { useState } from 'react'
 import './TenziesRollButton.css'
 
-export const TenziesRollButton = (props) => {
+export const TenziesRollButton = ({
+  timeOut,
+  isVictorious,
+  startNewGame,
+  rollDice,
+}) => {
   const [buttonBlock, setButtonBlock] = useState(false)
   const handleClick = () => {
     if (!buttonBlock) {
       setButtonBlock(true)
-      setTimeout(() => setButtonBlock(false), props.timeOut + 50)
-      props.isVictorious ? props.startNewGame() : props.rollDice()
+      setTimeout(() => setButtonBlock(false), timeOut + 50)
+      isVictorious ? startNewGame() : rollDice()
     }
   }
 
   const setButtonText = () => {
     if (buttonBlock) {
       return 'Rolling...'
-    } else if (props.isVictorious) {
+    } else if (isVictorious) {
       return 'Restart'
     } else {
       return 'Roll'
