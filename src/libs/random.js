@@ -1,5 +1,5 @@
 const rollDie = () => {
-  return Math.floor(Math.random() * 6) + 1
+  return Math.ceil(Math.random() * 6)
 }
 
 export { rollDie }

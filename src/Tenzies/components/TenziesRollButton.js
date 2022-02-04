@@ -1,31 +1,31 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './TenziesRollButton.css'
 
 export const TenziesRollButton = ({
   isVictorious,
-  isNewGame,
-  timeOut,
+  rollTimeOut,
   startNewGame,
   rollDice,
 }) => {
   const [buttonBlock, setButtonBlock] = useState(false)
+  const [buttonText, setButtonText] = useState('Roll')
   const handleClick = () => {
     if (!buttonBlock) {
       setButtonBlock(true)
-      setTimeout(() => setButtonBlock(false), timeOut + 50)
+      setTimeout(() => setButtonBlock(false), rollTimeOut + 50)
       isVictorious ? startNewGame() : rollDice()
     }
   }
 
-  const setButtonText = () => {
+  useEffect(() => {
     if (buttonBlock) {
-      return 'Rolling...'
+      setButtonText('Rolling...')
     } else if (isVictorious) {
-      return 'Restart'
+      setButtonText('Restart')
     } else {
-      return 'Roll'
+      setButtonText('Roll')
     }
-  }
+  }, [buttonBlock, isVictorious])
 
   return (
     <div
@@ -35,7 +35,7 @@ export const TenziesRollButton = ({
       }
       onClick={handleClick}
     >
-      {setButtonText()}
+      {buttonText}
     </div>
   )
 }

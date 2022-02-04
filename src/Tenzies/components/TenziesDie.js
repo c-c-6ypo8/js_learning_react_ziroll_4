@@ -5,9 +5,9 @@ import './TenziesDie.css'
 export const TenziesDie = ({
   die,
   isStatic,
-  timeOut,
+  rollTimeOut,
   rollCounter,
-  onSelect,
+  selectDie,
   rightValue,
 }) => {
   const generateDieImage = (dieValue) => {
@@ -32,7 +32,7 @@ export const TenziesDie = ({
   useEffect(() => {
     if (!isStatic && !die.isSelected) {
       const timeOutStep = Math.floor(
-        timeOut / Math.floor(Math.random() * 10 + 2),
+        rollTimeOut / Math.floor(Math.random() * 10 + 2),
       )
       const generateDieImages = (time) => {
         let currentValue = die.value
@@ -50,9 +50,9 @@ export const TenziesDie = ({
             }
           }, timeOutStep)
       }
-      generateDieImages(timeOut)
+      generateDieImages(rollTimeOut)
     }
-  }, [rollCounter, die, isStatic, timeOut])
+  }, [rollCounter, die, isStatic, rollTimeOut])
 
   // Resets die reaction after timeout
   useEffect(() => {
@@ -60,7 +60,7 @@ export const TenziesDie = ({
   }, [dieReaction])
 
   const handleClick = () => {
-    if (onSelect && !dieReaction) {
+    if (selectDie && !dieReaction) {
       if (die.value === rightValue || !rightValue) {
         if (!die.isSelected) {
           setDieReaction('right')
@@ -68,7 +68,7 @@ export const TenziesDie = ({
       } else {
         setDieReaction('wrong')
       }
-      onSelect(die.id)
+      selectDie(die.id)
     }
   }
 

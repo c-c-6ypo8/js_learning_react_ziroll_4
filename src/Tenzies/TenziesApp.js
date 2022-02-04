@@ -5,15 +5,15 @@ import './TenziesApp.css'
 import { TenziesDie } from './components/TenziesDie'
 import { TenziesRollButton } from './components/TenziesRollButton'
 import { TenziesHeader } from './components/TenziesHeader'
-import { rollDie } from '../libs/random'
 import { TenziesHighScore } from './components/TenziesHighScore'
 import { loadDataFromLS, saveDataToLS } from '../libs/localStorage'
 import { getCurrentFullDate } from '../libs/date'
+import { rollDie } from '../libs/random'
 import { nanoid } from 'nanoid'
 import { TenziesServiceButton } from './components/TenziesServiceButton'
 
 export const TenziesApp = () => {
-  const diceGenerate = (quantity) => {
+  const generateDice = (quantity) => {
     let dice = []
     for (let dieNum = 1; dieNum <= quantity; dieNum++) {
       dice.push({
@@ -27,9 +27,9 @@ export const TenziesApp = () => {
 
   const tenziesLSName = 'tenzies'
   const tenziesHighScoreLinesQuantity = 6
-  const { width, height } = useWindowSize()
+  const { width: appWidth, height: appHeight } = useWindowSize()
 
-  const [dice, setDice] = useState(() => diceGenerate(10))
+  const [dice, setDice] = useState(() => generateDice(10))
   const [gatheredValue, setGatheredValue] = useState()
   const [timer, setTimer] = useState(0)
   const [timerId, setTimerId] = useState()
@@ -40,7 +40,7 @@ export const TenziesApp = () => {
   })
 
   // Timeout for blocking Roll button and for dice roll time
-  const timeOut = 500
+  const rollTimeOut = 500
 
   const rollDice = () => {
     setRollCounter((prev) => prev + 1)
@@ -51,7 +51,7 @@ export const TenziesApp = () => {
     })
   }
 
-  const dieSelectToggle = (dieId) => {
+  const selectDie = (dieId) => {
     setDice((prev) =>
       prev.map((die) => {
         if (die.id === dieId) {
@@ -86,7 +86,10 @@ export const TenziesApp = () => {
   }, [timerId])
 
   const startNewGame = () => {
-    setDice(diceGenerate(10))
+    setDice(generateDice(10))
+    setGatheredValue(undefined)
+    setRollCounter(0)
+    clearTimer()
   }
 
   const isNewGame = useCallback(() => {
@@ -98,26 +101,18 @@ export const TenziesApp = () => {
   }, [dice])
 
   useEffect(() => {
-    if (isNewGame()) {
-      setGatheredValue(undefined)
-      setRollCounter(0)
-      clearTimer()
-    }
-  }, [isNewGame, clearTimer])
-
-  useEffect(() => {
     if (isVictorious()) {
       clearInterval(timerId)
-      setHighScore((prev) => {
-        const newData = { data: [] }
-        newData.data = [...prev.data]
+      setHighScore((prevScore) => {
+        const newScore = { data: [] }
+        newScore.data = [...prevScore.data]
         /* Setting off the 'last' flag (for marking current score line in the 
         high score table) */
-        newData.data = newData.data.map((value) => ({
+        newScore.data = newScore.data.map((value) => ({
           ...value,
           last: false,
         }))
-        newData.data.push({
+        newScore.data.push({
           id: nanoid(),
           date: getCurrentFullDate(),
           time: timer,
@@ -125,7 +120,7 @@ export const TenziesApp = () => {
           value: gatheredValue,
           last: true,
         })
-        newData.data
+        newScore.data
           .sort((first, second) => {
             if (first.time < second.time) {
               return -1
@@ -134,7 +129,7 @@ export const TenziesApp = () => {
             } else return 0
           })
           .splice(tenziesHighScoreLinesQuantity)
-        return newData
+        return newScore
       })
     }
   }, [isVictorious, rollCounter, timerId, timer, gatheredValue])
@@ -150,8 +145,8 @@ export const TenziesApp = () => {
           key={die.id}
           die={die}
           isStatic={false}
-          timeOut={timeOut}
-          onSelect={dieSelectToggle}
+          rollTimeOut={rollTimeOut}
+          selectDie={selectDie}
           rightValue={gatheredValue}
           rollCounter={rollCounter}
         />
@@ -161,7 +156,7 @@ export const TenziesApp = () => {
 
   return (
     <>
-      {isVictorious() && <Confetti width={width} height={height} />}
+      {isVictorious() && <Confetti width={appWidth} height={appHeight} />}
       <main className='tenzies-app'>
         <TenziesHeader
           isVictorious={isVictorious()}
@@ -180,10 +175,9 @@ export const TenziesApp = () => {
           )}
           <TenziesRollButton
             isVictorious={isVictorious()}
-            isNewGame={isNewGame()}
             rollDice={rollDice}
             startNewGame={startNewGame}
-            timeOut={timeOut}
+            rollTimeOut={rollTimeOut}
           />
           {!isNewGame() && !isVictorious() && (
             <TenziesServiceButton
