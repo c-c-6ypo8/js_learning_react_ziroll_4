@@ -9,8 +9,7 @@
   --side-size: 88vmin;
   --font-color: rgb(48, 48, 48);
   width: var(--side-size);
-  border: 1px solid var(--border-color);  
-  margin: 5%;
+  border: 1px solid var(--border-color);    
   padding: 10% 8% 5%;
   background-color: var(--bg-color);
   border-radius: var(--border-radius);
