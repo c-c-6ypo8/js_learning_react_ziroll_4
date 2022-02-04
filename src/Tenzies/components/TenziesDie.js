@@ -78,7 +78,8 @@ export const TenziesDie = ({
       className={
         'no-selection tenzies-die' +
         (die?.isSelected ? ' tenzies-die-selected ' : '') +
-        (dieReaction ? ` tenzies-die-reaction-${dieReaction}` : '')
+        (dieReaction ? ` tenzies-die-reaction-${dieReaction}` : '') +
+        (isStatic ? ' tenzies-die-static' : '')
       }
     >
       {dieImage}
