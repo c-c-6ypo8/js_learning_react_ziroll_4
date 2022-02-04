@@ -17,7 +17,7 @@ export const TenziesHighScore = ({ highScore, setHighScore }) => {
       </div>
       <div className='tenzies-highscore-line-text'>
         <div>
-          <strong>{scoreLine.rolls}</strong> rolls in{' '}
+          <strong>{scoreLine.rolls}</strong> rerolls in{' '}
           <strong>{scoreLine.time}</strong> seconds
         </div>
         <div className='tenzies-highscore-line-text-date'>{scoreLine.date}</div>

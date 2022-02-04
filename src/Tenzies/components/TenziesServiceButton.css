@@ -6,7 +6,7 @@
   background-color: var(--hovered-bg);
   position: absolute;
   color: #b1b1b1;  
-  cursor: pointer;
+  cursor: pointer;  
 }
 
 .tenzies-servicebutton:hover {

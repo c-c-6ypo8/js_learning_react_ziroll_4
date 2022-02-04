@@ -29,7 +29,7 @@ export const TenziesHeader = ({
           </div>
         </div>
         <div className='tenzies-header-stats-rolls'>
-          <div className='tenzies-header-stats-title'>Rolls made</div>
+          <div className='tenzies-header-stats-title'>Rerolls made</div>
           <div className='tenzies-header-stats-rollscounter'>{rollCounter}</div>
         </div>
         <div className='tenzies-header-stats-time'>
@@ -45,8 +45,8 @@ export const TenziesHeader = ({
       <h1 className='tenzies-header-title'> 🏆 Congratulations!</h1>
       <span className='tenzies-header-desc'>
         You've gathered tenzies
-        <br /> in <strong>{timer}</strong> seconds and
-        <strong> {rollCounter}</strong> rerolls!
+        <br /> in <strong>{rollCounter}</strong> rerolls and
+        <strong> {timer}</strong> seconds!
       </span>
     </section>
   )

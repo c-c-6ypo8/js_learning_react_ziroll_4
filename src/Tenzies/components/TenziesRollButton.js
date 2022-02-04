@@ -2,8 +2,9 @@ import { useState } from 'react'
 import './TenziesRollButton.css'
 
 export const TenziesRollButton = ({
-  timeOut,
   isVictorious,
+  isNewGame,
+  timeOut,
   startNewGame,
   rollDice,
 }) => {
@@ -30,7 +31,7 @@ export const TenziesRollButton = ({
     <div
       className={
         'no-selection tenzies-rollbutton' +
-        (buttonBlock ? ' tenzie-rollbutton-disabled' : '')
+        (buttonBlock ? ' tenzies-rollbutton-disabled' : '')
       }
       onClick={handleClick}
     >

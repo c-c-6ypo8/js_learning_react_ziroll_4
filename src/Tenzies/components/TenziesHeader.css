@@ -2,9 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100px;
   text-align: center;
+  margin-bottom: 1%;
 }
 
 .tenzies-header-title {
@@ -15,14 +17,14 @@
 
 .tenzies-header-desc {
   width: 75%;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .tenzies-header-stats {
   width: 100%;
   display: flex;
   align-items: top;
-  justify-content: space-around;
+  justify-content: space-around;  
 }
 
 .tenzies-header-stats-gathering,
@@ -30,15 +32,17 @@
 .tenzies-header-stats-rolls {
   display: flex;
   flex-flow: column;
+  flex-basis: 33%;
 }
 
 .tenzies-header-stats-gathering {
   align-items: center;
 }
 
-.tenzies-header-stats-time-timer,
-.tenzies-header-stats-rollscounter {
-  font-size: 40px;
+.tenzies-header-die,
+.tenzies-header-stats-rollscounter,
+.tenzies-header-stats-time-timer {
+  font-size: calc(var(--side-size) / 12);
   font-weight: bold;
   display: flex;
   flex-flow: column;
@@ -53,4 +57,16 @@
 .tenzies-header-die .tenzies-die {
   width: calc(var(--side-size) / 12);
   height: calc(var(--side-size) / 12);
+}
+
+@media screen and (min-width: 1000px) {
+  .tenzies-header-stats-title {
+    font-size: 1.2rem;
+  }  
+}
+
+@media screen and (min-width: 300px) {    
+  .tenzies-header-desc {
+    width: 90%;    
+  }
 }

@@ -10,6 +10,7 @@ import { TenziesHighScore } from './components/TenziesHighScore'
 import { loadDataFromLS, saveDataToLS } from '../libs/localStorage'
 import { getCurrentFullDate } from '../libs/date'
 import { nanoid } from 'nanoid'
+import { TenziesServiceButton } from './components/TenziesServiceButton'
 
 export const TenziesApp = () => {
   const diceGenerate = (quantity) => {
@@ -17,7 +18,7 @@ export const TenziesApp = () => {
     for (let dieNum = 1; dieNum <= quantity; dieNum++) {
       dice.push({
         id: dieNum,
-        selected: false,
+        isSelected: false,
         value: rollDie(),
       })
     }
@@ -45,7 +46,7 @@ export const TenziesApp = () => {
     setRollCounter((prev) => prev + 1)
     setDice((prev) => {
       return prev.map((die) =>
-        die.selected ? die : { ...die, value: rollDie() },
+        die.isSelected ? die : { ...die, value: rollDie() },
       )
     })
   }
@@ -57,10 +58,10 @@ export const TenziesApp = () => {
           if (!gatheredValue) {
             setGatheredValue(die.value)
             startTimer()
-            return { ...die, selected: true }
+            return { ...die, isSelected: true }
           }
           if (die.value === gatheredValue) {
-            return { ...die, selected: true }
+            return { ...die, isSelected: true }
           } else {
             return die
           }
@@ -89,11 +90,11 @@ export const TenziesApp = () => {
   }
 
   const isNewGame = useCallback(() => {
-    return dice.filter((die) => die.selected).length === 0
+    return dice.filter((die) => die.isSelected).length === 0
   }, [dice])
 
   const isVictorious = useCallback(() => {
-    return dice.filter((die) => !die.selected).length === 0
+    return dice.filter((die) => !die.isSelected).length === 0
   }, [dice])
 
   useEffect(() => {
@@ -179,10 +180,19 @@ export const TenziesApp = () => {
           )}
           <TenziesRollButton
             isVictorious={isVictorious()}
+            isNewGame={isNewGame()}
             rollDice={rollDice}
             startNewGame={startNewGame}
             timeOut={timeOut}
           />
+          {!isNewGame() && !isVictorious() && (
+            <TenziesServiceButton
+              symbol='↻'
+              position='bottomright'
+              title='Restart Game'
+              onClick={startNewGame}
+            />
+          )}
         </div>
       </main>
     </>

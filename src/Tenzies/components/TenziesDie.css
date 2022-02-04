@@ -11,6 +11,8 @@
   font-weight: bold;
   padding: 13%;
   transition: 0.2s ease;
+  background-color: white;
+  cursor: pointer;
 }
 
 .tenzies-die > * {
@@ -94,21 +96,11 @@
 }
 
 .tenzies-die-reaction-wrong {
-  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  animation: shake 0.7s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 .tenzies-die-reaction-right {
   animation: press 0.3s cubic-bezier(0.36, 0.07, 0.19, 0.97);
-}
-
-.tenzies-die-roll {
-  animation: rotate 1s ease;
-}
-
-@keyframes rotate {
-  50% {
-    transform: rotate(1080deg);
-  }
 }
 
 @keyframes shake {

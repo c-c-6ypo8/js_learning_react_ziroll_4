@@ -24,12 +24,13 @@ export const TenziesDie = ({
     )
   }
 
+  const dieReactionTimeout = 700
   const [dieReaction, setDieReaction] = useState()
-  const dieReactionTimeout = 820
   const [dieImage, setDieImage] = useState(() => generateDieImage(die.value))
 
+  
   useEffect(() => {
-    if (!isStatic && !die.selected) {
+    if (!isStatic && !die.isSelected) {
       const timeOutStep = Math.floor(
         timeOut / Math.floor(Math.random() * 10 + 2),
       )
@@ -59,9 +60,9 @@ export const TenziesDie = ({
   }, [dieReaction])
 
   const handleClick = () => {
-    if (onSelect) {
+    if (onSelect && !dieReaction) {
       if (die.value === rightValue || !rightValue) {
-        if (!die.selected) {
+        if (!die.isSelected) {
           setDieReaction('right')
         }
       } else {
@@ -76,7 +77,7 @@ export const TenziesDie = ({
       onClick={handleClick}
       className={
         'no-selection tenzies-die' +
-        (die?.selected ? ' tenzies-die-selected ' : '') +
+        (die?.isSelected ? ' tenzies-die-selected ' : '') +
         (dieReaction ? ` tenzies-die-reaction-${dieReaction}` : '')
       }
     >
