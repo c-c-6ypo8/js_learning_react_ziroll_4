@@ -1,41 +1,40 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import './QuizzAnswerButton.css'
 
 export const QuizzAnswerButton = ({
   answer,
-  correct_answer,
-  isChecking,
+  isCorrect,
   isSelected,
-  onSelect,
+  currentAppState,
+  select,
 }) => {
-  const [buttonStyle, setButtonStyle] = useState()
+  const defineButtonStyle = useCallback(() => {
+    if (currentAppState === 'checking') {
+      if (isCorrect) {
+        return 'correct'
+      } else {
+        return isSelected
+          ? 'wrong quizz-answerbutton-blocked'
+          : 'default quizz-answerbutton-blocked'
+      }
+    } else {
+      return isSelected ? 'selected' : 'default'
+    }
+  }, [isSelected, currentAppState, isCorrect])
+
+  const [buttonStyle, setButtonStyle] = useState(() => defineButtonStyle())
 
   useEffect(() => {
-    if (isChecking) {
-      if (isSelected) {
-        if (answer === correct_answer) {
-          setButtonStyle('correct')
-        } else {
-          setButtonStyle('wrong')
-        }
-      } else {
-        setButtonStyle()
-      }
-    } else if (isSelected) {
-      setButtonStyle('selected')
-    } else {
-      setButtonStyle()
-    }
-  }, [isSelected, isChecking, correct_answer, answer])
+    setButtonStyle(defineButtonStyle())
+  }, [defineButtonStyle])
 
   return (
     <div
-      className={
-        'quizz-answerbutton no-selection' +
-        (buttonStyle ? ' quizz-answerbutton_' + buttonStyle : '')
-      }
+      className={'no-selection quizz-answerbutton_' + buttonStyle}
       dangerouslySetInnerHTML={{ __html: answer }}
-      onClick={() => !isChecking && onSelect(answer)}
+      onClick={() =>
+        !(currentAppState === 'checking') && !isSelected && select()
+      }
     />
   )
 }
