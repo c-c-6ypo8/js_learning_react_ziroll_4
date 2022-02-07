@@ -1,7 +1,6 @@
 import './QuizzApp.css'
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { nanoid } from 'nanoid'
-import { data } from './data'
 import { shuffleArray } from '../libs/arrays'
 import { QuizzQuestionBlock } from './components/QuizzQuestionBlock'
 
@@ -9,94 +8,113 @@ export const QuizzApp = () => {
   /* App can be in three states: 'welcome', 'quizz', 'checking' */
   const [currentAppState, setCurrentAppState] = useState('welcome')
   const [questionsData, setQuestionsData] = useState([])
-  const [selections, setSelections] = useState({})
   const [score, setScore] = useState(0)
 
   /* Modifying data, that came from server to track answer selection */
   const loadQuestionsData = (url) => {
-    const dataModified = data.map((questionData) => {
-      const answers = questionData.incorrect_answers.concat([
-        questionData.correct_answer,
-      ])
+    fetch(url)
+      .then((response) => response.json())
+      .then((jsonData) => {
+        const dataModified = jsonData.results.map((questionData) => {
+          const answers = questionData.incorrect_answers.concat([
+            questionData.correct_answer,
+          ])
 
-      shuffleArray(answers)
+          shuffleArray(answers)
 
-      const questionDataModified = {
-        ...questionData,
-        answers: answers,
-        id: nanoid(),
-      }
+          const questionDataModified = {
+            ...questionData,
+            answers: answers,
+            selected_answer: undefined,
+            id: nanoid(),
+          }
 
-      delete questionDataModified['incorrect_answers']
-      return questionDataModified
-    })
-    setQuestionsData(dataModified)
-    setSelections(
-      Object.fromEntries(dataModified.map((value) => [value.id, undefined])),
-    )
-    // fetch(url)
-    //   .then((response) => response.json())
-    //   .then((jsonData) => {
-    //     setQuestionsData(jsonData.results)
-    //   })
+          delete questionDataModified['incorrect_answers']
+          return questionDataModified
+        })
+        setQuestionsData(dataModified)
+      })
   }
 
-  const selectAnswer = (questionId, answer) => {
-    setSelections((prev) => {
-      const newSelections = { ...prev }
-      newSelections[questionId] = answer
-      return newSelections
+  const selectAnswer = (questionNum, answer) => {
+    setQuestionsData((prev) => {
+      const newData = [...prev]
+      newData[questionNum].selected_answer = answer
+      countScore()
+      return newData
     })
   }
 
   const openTriviaDBUrl = 'https://opentdb.com/api.php?amount=5'
 
-  const startNewQuizz = useCallback(() => {
+  const startWelcome = useCallback(() => {
     setCurrentAppState('welcome')
     loadQuestionsData(openTriviaDBUrl)
   }, [])
 
-  const checkQuizz = useCallback(() => {
-    setCurrentAppState('checking')
-    
+  const startQuizz = useCallback(() => {
+    setCurrentAppState('quizz')
   }, [])
 
-  const quizzScreen = useMemo(
-    () => (
-      <section className='quizz-quizz'>
-        {questionsData.map((questionData) => {
-          return (
-            <QuizzQuestionBlock
-              key={questionData.id}
-              questionData={questionData}
-              selectedAnswer={selections[questionData.id]}
-              selectAnswer={selectAnswer}
-              currentAppState={currentAppState}
-            />
-          )
-        })}
-        {currentAppState === 'quizz' && (
+  const startChecking = useCallback(() => {
+    setCurrentAppState('checking')
+  }, [])
+
+  const areAllSelected = useCallback(
+    () =>
+      questionsData.filter(
+        (questionData) => questionData.selected_answer === undefined,
+      ).length === 0,
+    [questionsData],
+  )
+
+  const countScore = useCallback(() => {
+    let counter = 0
+    for (let questionData of questionsData) {
+      if (questionData.correct_answer === questionData.selected_answer)
+        counter++
+    }
+    setScore(counter)
+  }, [questionsData])
+
+  const quizzScreen = (
+    <section className='quizz-quizz'>
+      {questionsData.map((questionData, index) => {
+        return (
+          <QuizzQuestionBlock
+            key={questionData.id}
+            questionData={questionData}
+            questionNum={index}
+            selectAnswer={selectAnswer}
+            currentAppState={currentAppState}
+          />
+        )
+      })}
+      {currentAppState === 'quizz' && (
+        <button
+          className={
+            'quizz-button quizz-checkbutton no-selection' +
+            (!areAllSelected() ? ' quizz-checkbutton_locked' : '')
+          }
+          onClick={() => {
+            areAllSelected() && startChecking()
+          }}
+        >
+          Check answers
+        </button>
+      )}
+      {currentAppState === 'checking' && (
+        <section className='quizz-results'>
+          You scored {score}/{questionsData.length} correct answers
           <button
-            className='quizz-button quizz-checkbutton no-selection'
-            onClick={checkQuizz}
+            className='quizz-button quizz-playagainbutton no-selection'
+            onClick={startWelcome}
           >
-            Check answers
+            Play again
           </button>
-        )}
-        {currentAppState === 'checking' && (
-          <section className='quizz-results'>
-            You scored {5}/{5} correct answers
-            <button
-              className='quizz-button quizz-playagainbutton no-selection'
-              onClick={startNewQuizz}
-            >
-              Play again
-            </button>
-          </section>
-        )}
-      </section>
-    ),
-    [currentAppState, questionsData, selections, startNewQuizz, checkQuizz],
+        </section>
+      )}
+    </section>
   )
 
   const welcomeScreen = useMemo(
@@ -106,19 +124,16 @@ export const QuizzApp = () => {
         <p className='quizz-welcome-description'>
           Pass the Quizz with random questions
         </p>
-        <button
-          className='no-selection quizz-button'
-          onClick={() => setCurrentAppState('quizz')}
-        >
+        <button className='no-selection quizz-button' onClick={startQuizz}>
           Start quiz
         </button>
       </section>
     ),
-    [],
+    [startQuizz],
   )
 
   useEffect(() => {
-    loadQuestionsData()
+    loadQuestionsData(openTriviaDBUrl)
   }, [])
 
   return (

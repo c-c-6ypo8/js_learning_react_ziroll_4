@@ -3,7 +3,7 @@ import './QuizzQuestionBlock.css'
 
 export const QuizzQuestionBlock = ({
   questionData,
-  selectedAnswer,
+  questionNum,  
   selectAnswer,
   currentAppState,
 }) => {
@@ -13,8 +13,8 @@ export const QuizzQuestionBlock = ({
         key={questionData.id + answer}
         answer={answer}
         isCorrect={answer === questionData.correct_answer}
-        isSelected={selectedAnswer === answer}
-        select={() => selectAnswer(questionData.id, answer)}
+        isSelected={questionData.selected_answer === answer}
+        select={() => selectAnswer(questionNum, answer)}
         currentAppState={currentAppState}
       />
     )
