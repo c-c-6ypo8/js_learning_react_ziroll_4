@@ -1,0 +1,16 @@
+.quizz-welcome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  min-width: var(--side-size);
+  height: var(--side-size);
+  background: url(../assets/blob-blue.svg) no-repeat bottom left,
+    url(../assets/blob-yellow.svg) var(--bg-color) no-repeat top right;
+}
+
+.quizz-welcome-title {
+  font-weight: bold;
+  font-size: 31.25px;
+  margin-bottom: 10px;
+}
