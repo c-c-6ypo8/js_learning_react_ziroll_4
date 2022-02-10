@@ -5,12 +5,13 @@ import { QuizzQuestionBlock } from './QuizzQuestionBlock'
 import './QuizzQuizzScreen.css'
 
 export const QuizzQuizzScreen = ({
+  quizzData,
+  setQuizzData,
   currentAppState,
   setCurrentAppState,
   apiURL,
 }) => {
   const [score, setScore] = useState(0)
-  const [questionsData, setQuestionsData] = useState([])
 
   /* Modifying data, that came from server to track answer selection */
   const loadQuestionsData = (link) => {
@@ -34,12 +35,12 @@ export const QuizzQuizzScreen = ({
           delete questionDataModified['incorrect_answers']
           return questionDataModified
         })
-        setQuestionsData(dataModified)
+        setQuizzData(dataModified)
       })
   }
 
   const selectAnswer = (questionNum, answer) => {
-    setQuestionsData((prev) => {
+    setQuizzData((prev) => {
       const newData = [...prev]
       newData[questionNum].selected_answer = answer
       countScore()
@@ -49,20 +50,20 @@ export const QuizzQuizzScreen = ({
 
   const areAllSelected = useCallback(
     () =>
-      questionsData.filter(
+      quizzData.filter(
         (questionData) => questionData.selected_answer === undefined,
       ).length === 0,
-    [questionsData],
+    [quizzData],
   )
 
   const countScore = useCallback(() => {
     let counter = 0
-    for (let questionData of questionsData) {
+    for (let questionData of quizzData) {
       if (questionData.correct_answer === questionData.selected_answer)
         counter++
     }
     setScore(counter)
-  }, [questionsData])
+  }, [quizzData])
 
   const startChecking = useCallback(() => {
     areAllSelected() && setCurrentAppState('checking')
@@ -71,7 +72,7 @@ export const QuizzQuizzScreen = ({
   const startWelcome = useCallback(() => {
     setCurrentAppState('welcome')
     loadQuestionsData(apiURL)
-  }, [setCurrentAppState, apiURL])
+  }, [setCurrentAppState, apiURL, loadQuestionsData])
 
   useEffect(() => {
     loadQuestionsData(apiURL)
@@ -79,7 +80,7 @@ export const QuizzQuizzScreen = ({
 
   return (
     <section className='quizz-quizz'>
-      {questionsData.map((questionData, index) => {
+      {quizzData.map((questionData, index) => {
         return (
           <QuizzQuestionBlock
             key={questionData.id}
@@ -103,7 +104,7 @@ export const QuizzQuizzScreen = ({
       )}
       {currentAppState === 'checking' && (
         <section className='quizz-results'>
-          You scored {score}/{questionsData.length} correct answers
+          You scored {score}/{quizzData.length} correct answers
           <button
             className='quizz-button quizz-playagainbutton no-selection'
             onClick={startWelcome}

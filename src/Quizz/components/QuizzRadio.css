@@ -1,0 +1,87 @@
+.quizz-radio-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.quizz-radio-label {
+  height: 15px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  padding-left: 18px;
+  line-height: 1;
+}
+
+.quizz-radio-label:hover .quizz-radio-custombutton {
+  border-color: var(--main-color);
+}
+
+.quizz-radio-button:focus ~ .quizz-radio-custombutton {
+  box-shadow: 0 0 0 1px rgb(82, 98, 190, 0.55);
+}
+
+.quizz-radio-label-star {
+  font-size: 9px;
+}
+
+.quizz-radio-label-text {
+  padding-left: 2px;
+}
+
+.quizz-radio-button {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.quizz-radio-button:checked ~ .quizz-radio-custombutton {
+  /* background-color: rgb(225, 232, 255); */
+  border-color: var(--main-color);
+}
+
+.quizz-radio-custombutton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: white;
+  cursor: pointer;
+  white-space: unset;
+  border: 1px solid rgb(189, 189, 189);
+  border-radius: 50%;
+}
+
+.quizz-radio-custombutton:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.quizz-radio-button:checked ~ .quizz-radio-custombutton:after {
+  display: block;
+}
+
+.quizz-radio-custombutton:after {
+  left: 3px;
+  top: 3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--main-color);
+  animation: bump 0.2s ease;
+}
+
+@keyframes bump {
+  50% {
+    box-shadow: 0 0 0 1px rgb(86, 101, 176);
+  }
+}

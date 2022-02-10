@@ -1,0 +1,19 @@
+.MuiSelect-select {
+  font-family: 'Karla', sans-serif;
+  padding: 8px;
+  font-size: 14px;
+  width: 150px;
+  border: 1px solid #ced4da;
+  background-color: white;
+  border-radius: 10px !important;  
+}
+
+.MuiSelect-select:focus,
+.MuiSelect-select:active {
+  border-color: rgba(52, 76, 173, 0.7);
+  box-shadow: 0 0 0 0.2rem rgba(52, 76, 173, 0.25);
+}
+
+.MuiSelect-select:hover {
+  border-color: rgba(52, 76, 173, 0.7);
+}

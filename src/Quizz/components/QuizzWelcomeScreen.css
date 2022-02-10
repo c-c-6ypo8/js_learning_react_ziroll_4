@@ -14,3 +14,22 @@
   font-size: 31.25px;
   margin-bottom: 10px;
 }
+
+.quizz-welcome-options {
+  padding: 15px 0;
+  width: 35%;
+  display: flex;
+  flex-flow: column;  
+}
+
+.quizz-welcome-options-title {
+  font-weight: 500;
+  font-size: 14px;
+  padding: 10px 0 5px 0;
+}
+
+.quizz-welcome-options > p {
+  font-size: 12px;
+  font-style: italic;
+  padding-bottom: 5px;
+}

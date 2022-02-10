@@ -1,0 +1,50 @@
+.quizz-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 5px;
+  /* background-color: rgb(75, 103, 201); */
+  background: linear-gradient(
+    90deg,
+    rgb(73, 101, 204) 0%,
+    rgb(107, 160, 228) 100%
+  );
+  /* border: 1px solid var(--main-color); */
+  outline: none;
+  border-radius: 10px;
+  opacity: 0.8;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  margin: 10px 0;
+}
+
+.quizz-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0px 1px 1px rgba(131, 131, 131, 0.95);
+  cursor: pointer;
+}
+
+.quizz-slider::-moz-range-thumb {
+  appearance: none;
+  width: 5px;
+  height: 5px;
+  background: var(--main-color);
+  cursor: pointer;
+}
+
+.quizz-slider:focus::-webkit-slider-thumb {
+  border-color: rgb(82, 98, 190, 1);
+  box-shadow: 0 0px 1px 2px rgb(82, 98, 190, 0.55);
+}
+
+.quizz-slider:focus::-moz-range-thumb {
+  border-color: rgb(82, 98, 190, 1);
+  box-shadow: 0 0 0 1px rgb(82, 98, 190, 0.55);
+}
+
+.quizz-slider:hover {
+  opacity: 1;
+}

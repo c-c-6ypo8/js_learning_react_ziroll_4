@@ -4,7 +4,7 @@ import { QuizzWelcomeScreen } from './components/QuizzWelcomeScreen'
 import { QuizzQuizzScreen } from './components/QuizzQuizzScreen'
 
 export const QuizzApp = () => {
-  const [apiURL, setApiURL] = useState()
+  const [quizzData, setQuizzData] = useState([])
   /* App can be in three states: 'welcome', 'quizz', 'checking' */
   const [currentAppState, setCurrentAppState] = useState('welcome')
 
@@ -15,12 +15,16 @@ export const QuizzApp = () => {
   return (
     <main className='quizz-app'>
       {currentAppState === 'welcome' ? (
-        <QuizzWelcomeScreen startQuizz={startQuizz} setApiURL={setApiURL}/>
+        <QuizzWelcomeScreen
+          startQuizz={startQuizz}
+          setQuizzData={setQuizzData}
+        />
       ) : (
         <QuizzQuizzScreen
+          quizzData={quizzData}
+          setQuizzData={setQuizzData}
           currentAppState={currentAppState}
           setCurrentAppState={setCurrentAppState}
-          apiURL={apiURL}
         />
       )}
     </main>

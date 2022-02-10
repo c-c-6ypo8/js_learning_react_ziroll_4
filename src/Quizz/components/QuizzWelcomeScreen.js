@@ -1,22 +1,29 @@
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
+import { QuizzRadio } from './QuizzRadio'
+import { QuizzSelector } from './QuizzSelector'
+import { QuizzSlider } from './QuizzSlider'
 import './QuizzWelcomeScreen.css'
 
-export const QuizzWelcomeScreen = ({ startQuizz }) => {
-  let categories = ['Films', 'Music', 'Any Category']
-  const difficulties = ['Any Difficulty', 'Easy', 'Medium', 'Hard']
+export const QuizzWelcomeScreen = ({ startQuizz, setQuizzData }) => {
+  const [apiURL, setApiURL] = useState()
+
+  let categories = [
+    'Films',
+    'Music',
+    'Any',
+    'Any Category Any CategoryAny CategoryAny CategoryAny CategoryAny CategoryAny Category',
+  ]
+
+  const difficulties = ['easy', 'medium', 'hard']
+
+  const minAmount = 1
   const maxAmount = 50
-  const amounts = useMemo(() => {
-    const newArr = []
-    for (let i = 5; i <= maxAmount; i += 5) {
-      newArr.push(i)
-    }
-    return newArr
-  }, [])
+  const defaultAmount = 5
 
   const [options, setOptions] = useState({
-    category: 'Any Category',
-    difficulty: 'Any Difficulty',
-    amount: 5,
+    category: 'Any',
+    difficulty: 'medium',
+    amount: defaultAmount,
   })
 
   const handleSelect = (event) => {
@@ -27,44 +34,38 @@ export const QuizzWelcomeScreen = ({ startQuizz }) => {
   }
 
   return (
-    <section className='quizz-welcome'>
+    <main className='quizz-welcome'>
       <h1 className='quizz-welcome-title'>Quizzical</h1>
       <p className='quizz-welcome-description'>Customize your Quizz:</p>
-      <select value={options.category} name='category' onChange={handleSelect}>
-        {categories.map((category) => {
-          return (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          )
-        })}
-      </select>
-      <select
-        value={options.difficulty}
-        name='difficulty'
-        onChange={handleSelect}
-      >
-        {difficulties.map((difficulty) => {
-          return (
-            <option key={difficulty} value={difficulty}>
-              {difficulty}
-            </option>
-          )
-        })}
-      </select>
-      <select value={options.amount} name='amount' onChange={handleSelect}>
-        {amounts.map((amount) => {
-          return (
-            <option key={amount} value={amount}>
-              {amount}
-            </option>
-          )
-        })}
-      </select>
+      <section className='quizz-welcome-options'>
+        <h5 className='quizz-welcome-options-title'>Select category:</h5>
+        <QuizzSelector
+          name='category'
+          values={categories}
+          selectedValue={options.category}
+          handleChange={handleSelect}
+        />
+        <h5 className='quizz-welcome-options-title'>Select difficulty:</h5>
+        <p>Greater difficulty — greater the reward!</p>
+        <QuizzRadio
+          name='difficulty'
+          values={difficulties}
+          selectedValue={options.difficulty}
+          handleChange={handleSelect}
+        />
+        <h5 className='quizz-welcome-options-title'>Select amount:</h5>
+        <QuizzSlider
+          name='amount'
+          min={minAmount}
+          max={maxAmount}
+          selectedValue={options.amount}
+          handleChange={handleSelect}
+        />
+      </section>
 
       <button className='no-selection quizz-button' onClick={startQuizz}>
         Start quiz
       </button>
-    </section>
+    </main>
   )
 }
