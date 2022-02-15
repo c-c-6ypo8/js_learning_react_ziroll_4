@@ -12,24 +12,67 @@
 .quizz-welcome-title {
   font-weight: bold;
   font-size: 31.25px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .quizz-welcome-options {
-  padding: 15px 0;
-  width: 35%;
+  padding: 25px;
+  border-radius: 10px;
+  width: 50%;
   display: flex;
-  flex-flow: column;  
+  flex-flow: column;
+  /* align-items: center; */
+  position: absolute;
+  gap: 5px;
+  background-color: var(--bg-color);
+  box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.075);
+}
+
+.quizz-welcome-options-container {
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 20px;
+  width: 38%;
+  align-items: center;
 }
 
 .quizz-welcome-options-title {
   font-weight: 500;
   font-size: 14px;
-  padding: 10px 0 5px 0;
+  padding: 10px 0 7px;
+  text-overflow: ellipsis;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.quizz-welcome-options-value {
+  word-wrap: break-word;
+  word-break: break-all;
+  padding: 0 3px;
+  hyphens: auto;
 }
 
 .quizz-welcome-options > p {
   font-size: 12px;
   font-style: italic;
   padding-bottom: 5px;
+}
+
+.quizz-welcome-customizelink {
+  font-size: 13px;
+  color: rgb(91, 113, 209);
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+.quizz-welcome-customizelink:hover {
+  text-decoration: underline;
+}
+
+.quizz-welcome-options-okbutton {
+  padding: 10px;
+  margin-top: 20px;
+  width: 100px;
+  align-self: center;
 }

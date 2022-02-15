@@ -2,39 +2,26 @@ import './QuizzRadio.css'
 import { capitalize } from '../../libs/strings'
 
 export const QuizzRadio = ({ name, values, selectedValue, handleChange }) => {
-  const starValues = {
-    easy: '⭐',
-    medium: '⭐⭐',
-    hard: '⭐⭐⭐',
-  }
   return (
     <section className='quizz-radio-list'>
-      {values.map((value) => (
+      {Object.entries(values).map(([key, value]) => (
         <label
-          htmlFor={value}
-          key={value}
-          title={starValues[value] ? capitalize(value) : false}
+          htmlFor={key}
+          key={key}
+          title={capitalize(key)}
           className='quizz-radio-label no-selection'
         >
           <input
             className='quizz-radio-button'
             type='radio'
-            id={value}
+            id={key}
             name={name}
-            value={value}
+            value={key}
             onChange={handleChange}
-            checked={selectedValue === value}
+            checked={selectedValue === key}
           />
           <span className='quizz-radio-custombutton'></span>
-          <div
-            className={
-              starValues[value]
-                ? 'quizz-radio-label-star'
-                : 'quizz-radio-label-text'
-            }
-          >
-            {starValues[value] ?? capitalize(value)}
-          </div>
+          <div className='quizz-radio-label-text'>{value}</div>
         </label>
       ))}
     </section>

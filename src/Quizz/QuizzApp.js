@@ -8,6 +8,12 @@ export const QuizzApp = () => {
   /* App can be in three states: 'welcome', 'quizz', 'checking' */
   const [currentAppState, setCurrentAppState] = useState('welcome')
 
+  const difficulties = {
+    easy: '⭐',
+    medium: '⭐⭐',
+    hard: '⭐⭐⭐',
+  }
+
   const startQuizz = useCallback(() => {
     setCurrentAppState('quizz')
   }, [])
@@ -18,6 +24,7 @@ export const QuizzApp = () => {
         <QuizzWelcomeScreen
           startQuizz={startQuizz}
           setQuizzData={setQuizzData}
+          difficulties={difficulties}
         />
       ) : (
         <QuizzQuizzScreen

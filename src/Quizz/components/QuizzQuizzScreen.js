@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import { useCallback, useState, useEffect } from 'react'
+import { useCallback, useState, useEffect, useMemo } from 'react'
 import { shuffleArray } from '../../libs/arrays'
 import { QuizzQuestionBlock } from './QuizzQuestionBlock'
 import './QuizzQuizzScreen.css'
@@ -11,6 +11,15 @@ export const QuizzQuizzScreen = ({
   setCurrentAppState,
   apiURL,
 }) => {
+  const starValues = useMemo(
+    () => ({
+      easy: '⭐',
+      medium: '⭐⭐',
+      hard: '⭐⭐⭐',
+    }),
+    [],
+  )
+  
   const [score, setScore] = useState(0)
 
   /* Modifying data, that came from server to track answer selection */

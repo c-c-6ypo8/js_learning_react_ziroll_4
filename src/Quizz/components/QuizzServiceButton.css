@@ -1,0 +1,24 @@
+.quizz-servicebutton {  
+  opacity: 1;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 12px;  
+  background-color: var(--hovered-bg);
+  position: absolute;
+  color: #b1b1b1;  
+  cursor: pointer;  
+}
+
+.quizz-servicebutton:hover {
+  color: rgb(0, 0, 0);  
+}
+
+.quizz-servicebutton-topright {
+  top: 20px;
+  right: 20px;
+}
+
+.quizz-servicebutton-bottomright {
+  bottom: 20px;
+  right: 20px;
+}

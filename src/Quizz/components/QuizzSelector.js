@@ -13,10 +13,10 @@ export const QuizzSelector = ({
       onChange={handleChange}
       className='quizz-selector'
     >
-      {values.map((value) => {
+      {Object.entries(values).map(([id, name]) => {
         return (
-          <option key={value} value={value}>
-            {value}
+          <option key={id} value={id}>
+            {name}
           </option>
         )
       })}

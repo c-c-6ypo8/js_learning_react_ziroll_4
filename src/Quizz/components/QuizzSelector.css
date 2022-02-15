@@ -3,6 +3,8 @@
   padding: 3px;
   border-color: #ccc;
   transition: all 0.25s ease;
+  width: 100%;
+  text-overflow: ellipsis;
 }
 
 .quizz-selector:hover,
